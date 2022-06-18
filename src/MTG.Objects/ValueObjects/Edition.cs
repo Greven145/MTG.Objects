@@ -65,8 +65,8 @@ public class Edition : ValueObject {
     }
 
     private Edition(string name, string code) {
-        _name = Guard.Against.NullOrWhiteSpace(name);
-        _code = Guard.Against.NullOrWhiteSpace(code);
+        _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+        _code = Guard.Against.NullOrWhiteSpace(code, nameof(code));
     }
 
     public static implicit operator string(Edition edition) => $"{edition._name} ({edition._code})";

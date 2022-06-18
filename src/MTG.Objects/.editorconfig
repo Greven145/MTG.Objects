@@ -6,6 +6,7 @@ root = true
 # All files
 [*]
 indent_style = space
+guidelines = 120
 
 # XML project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]

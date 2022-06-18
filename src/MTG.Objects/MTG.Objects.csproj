@@ -1,17 +1,55 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-	<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <LangVersion>10.0</LangVersion>
+
+    <Copyright>Copyright (c) Mark Gottselig</Copyright>
+    <Authors>Mark Gottselig</Authors>
+    <Company>Mark Gottselig</Company>
+    <Description>Magic: The Gathering objects and data</Description>
+    
+    <PackageIcon>MTG.Objects.png</PackageIcon>
+    <PackageIconUrl />
+
+    <Version>0.1.0.0</Version>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <PackageProjectUrl>https://github.com/Greven145/MTG.Objects</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Greven145/MTG.Objects</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>MTG Magic The Gathering</PackageTags>
+    <PackageReleaseNotes>Alpha Release</PackageReleaseNotes>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Resources\MTG.Objects.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <Compile Include="$(MSBuildThisFileDirectory)IsExternalInit.cs" Visible="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
     <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
     <PackageReference Include="ValueObject" Version="0.6.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+  
 </Project>
