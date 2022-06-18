@@ -17,9 +17,9 @@ The generator project will download data from MTGJson and create classes that ca
 
 ```csharp
     var deckName = "Tron";
-	var fileName = $"{deckName}.txt";
-	var filePath = "./path/to/deck/files";
-	
+    var fileName = $"{deckName}.txt";
+    var filePath = "./path/to/deck/files";
+
     var fileContents = await File.ReadAllLinesAsync(Path.Combine(filePath, fileName));
     var (deck, errors) = Deck.Parse(fileContents, name);
 ```
