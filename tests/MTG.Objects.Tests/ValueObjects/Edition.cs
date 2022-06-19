@@ -104,7 +104,7 @@ public class EditionTests
         const string expectedResult = "Tempest (TMP)";
 
         //act
-        string actualResult = edition;
+        string actualResult = edition!;
 
         //assert
         actualResult.Should().Be(expectedResult);
