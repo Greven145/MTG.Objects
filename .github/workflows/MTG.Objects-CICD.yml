@@ -37,7 +37,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test '/home/runner/work/MTG.Objects/MTG.Objects/test/MTG.Objects.Tests/MTG.Objects.Tests.Unit.csproj' --no-restore
+      run: dotnet test '/home/runner/work/MTG.Objects/MTG.Objects/tests/MTG.Objects.Tests.Unit/MTG.Objects.Tests.Unit.csproj' --no-restore
     - name: Publish
       run: dotnet publish '/home/runner/work/MTG.Objects/MTG.Objects/src/MTG.Objects/MTG.Objects.csproj' -c Release -o publish/source
     - name: Create nupkg
