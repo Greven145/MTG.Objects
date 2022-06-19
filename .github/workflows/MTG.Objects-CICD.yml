@@ -37,11 +37,11 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test '/home/runner/work/MTG.Objects/MTG.Objects/test/MTG.Objects.Tests.Unit.csproj' --no-restore
+      run: dotnet test '/home/runner/work/MTG.Objects/MTG.Objects/test/MTG.Objects.Tests/MTG.Objects.Tests.Unit.csproj' --no-restore
     - name: Publish
-      run: dotnet publish '/home/runner/work/MTG.Objects/MTG.Objects/src/MTG.Objects\MTG.Objects.csproj' -c Release -o publish/source
+      run: dotnet publish '/home/runner/work/MTG.Objects/MTG.Objects/src/MTG.Objects/MTG.Objects.csproj' -c Release -o publish/source
     - name: Create nupkg
-      run: dotnet pack '/home/runner/work/MTG.Objects/MTG.Objects/src/MTG.Objects\MTG.Objects.csproj' -c Release -o publish/nuget
+      run: dotnet pack '/home/runner/work/MTG.Objects/MTG.Objects/src/MTG.Objects/MTG.Objects.csproj' -c Release -o publish/nuget
     - name: Upload Source
       uses: actions/upload-artifact@v2.3.1
       with:
