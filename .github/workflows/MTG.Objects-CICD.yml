@@ -1,4 +1,4 @@
-name: CodeGen CI/CD
+name: MTG.Objects CI/CD
 
 on:
   workflow_dispatch:
