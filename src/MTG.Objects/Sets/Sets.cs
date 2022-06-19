@@ -477,7 +477,6 @@ public sealed class Sets : Dictionary<string,string> {
             { "PPLS", "Planeshift Promos" },
             { "PTG", "Ponies: The Galloping" },
             { "POR", "Portal" },
-            { "PPOD", "Portal Demo Game" },
             { "P02", "Portal Second Age" },
             { "PTK", "Portal Three Kingdoms" },
             { "PPTK", "Portal: Three Kingdoms Promos" },
