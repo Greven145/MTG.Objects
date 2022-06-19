@@ -1,4 +1,6 @@
-﻿namespace MTG.Objects.ValueObjects;
+﻿using System.Globalization;
+
+namespace MTG.Objects.ValueObjects;
 
 public class NumberOfCards : ValueObject {
     private readonly int _number;
@@ -29,5 +31,5 @@ public class NumberOfCards : ValueObject {
         return Equals((NumberOfCards)obj);
     }
 
-    public override string ToString() => _number.ToString();
+    public override string ToString() => _number.ToString(new NumberFormatInfo());
 }

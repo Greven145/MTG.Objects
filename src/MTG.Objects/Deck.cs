@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using MTG.Objects.Results;
 using MTG.Objects.ValueObjects;
@@ -15,7 +16,7 @@ public record Deck(string Name) {
         var deck = new Deck(deckName);
         var errors = new List<string>();
 
-        strings.Aggregate(true, (inMainBoard, line) => ParseLine(line, inMainBoard, errors, deck));
+        _ = strings.Aggregate(true, (inMainBoard, line) => ParseLine(line, inMainBoard, errors, deck));
         return new DeckParseResult(deck, errors);
     }
 
@@ -42,7 +43,7 @@ public record Deck(string Name) {
     }
 
     private static Card CardFromMatch(Match match) {
-        var count = int.Parse(match.Groups[1].Value);
+        var count = int.Parse(match.Groups[1].Value, new NumberFormatInfo());
         var name = match.Groups[2].Value;
         var card = new Card(name, (NumberOfCards)count);
         return card;
