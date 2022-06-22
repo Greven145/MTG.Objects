@@ -34,6 +34,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="IsExternalInit.cs" />
+    <Compile Include="IsExternalInit.cs" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Resources\MTG.Objects.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -41,14 +46,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)IsExternalInit.cs" Visible="false" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
     <PackageReference Include="Ardalis.SmartEnum" Version="2.1.0" />
     <PackageReference Include="ValueObject" Version="0.6.1" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
