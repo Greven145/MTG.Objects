@@ -11,7 +11,7 @@ on:
         default: 'Manual build from GitHub UI'    
 
 jobs:
-  build:
+  generate:
 
     runs-on: ubuntu-latest
 
@@ -29,4 +29,5 @@ jobs:
       working-directory: ./src/MTG.Object.Generator
     - name: Generate
       run: dotnet run
+      working-directory: ./src/MTG.Object.Generator
 
