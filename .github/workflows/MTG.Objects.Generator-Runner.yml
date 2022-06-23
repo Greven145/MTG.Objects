@@ -3,6 +3,12 @@ name: MTG.Objects.Generator Runner
 on:
   schedule:
     - cron: '37 4 * * *'
+  workflow_dispatch:
+   inputs:
+      reason:
+        description: 'The reason for running the workflow'
+        required: true
+        default: 'Manual build from GitHub UI'    
 
 jobs:
   build:
