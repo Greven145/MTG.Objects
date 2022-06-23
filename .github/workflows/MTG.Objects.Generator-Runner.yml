@@ -1,0 +1,26 @@
+name: MTG.Objects.Generator Runner
+
+on:
+  schedule:
+    - cron: '37 4 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ./src/MTG.Object.Generator
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: ./src/MTG.Object.Generator
+    - name: Generate
+      run: dotnet run
+
