@@ -8,7 +8,7 @@ on:
       reason:
         description: 'The reason for running the workflow'
         required: true
-        default: 'Manual build from GitHub UI'    
+        default: 'Manual build from GitHub UI'
 
 jobs:
   generate:
@@ -36,5 +36,7 @@ jobs:
           git config --global user.name 'Mark Gottselig'
           git config --global user.email 'greven145@users.noreply.github.com'
           git commit -am "Automated code generation"
-          git push      
+          git push
+        else
+          echo "No changes detected"
         fi
