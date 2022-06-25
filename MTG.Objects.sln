@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\MTG.Objects-CICD.yml = .github\workflows\MTG.Objects-CICD.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTG.Object.Generator.Tests.Unit", "tests\MTG.Object.Generator.Tests.Unit\MTG.Object.Generator.Tests.Unit.csproj", "{A2F9E58D-02AA-4239-85C5-CA9091C05F98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3126245E-B78D-483C-92ED-5C2814F61656}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3126245E-B78D-483C-92ED-5C2814F61656}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3126245E-B78D-483C-92ED-5C2814F61656}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2F9E58D-02AA-4239-85C5-CA9091C05F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2F9E58D-02AA-4239-85C5-CA9091C05F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2F9E58D-02AA-4239-85C5-CA9091C05F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2F9E58D-02AA-4239-85C5-CA9091C05F98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{A17F9056-6C11-40FC-8B2D-A03BD0D95D28} = {A7EDEDC0-EDD9-4915-9D61-8434168885D0}
 		{DBC69EF5-D2AD-464C-BEBA-851CD323F2B5} = {B35F3C55-2783-4D9D-B178-C91CE06AEA07}
 		{A2E19352-8D90-49EF-96FB-67E345412557} = {DBC69EF5-D2AD-464C-BEBA-851CD323F2B5}
+		{A2F9E58D-02AA-4239-85C5-CA9091C05F98} = {A17F9056-6C11-40FC-8B2D-A03BD0D95D28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A99633ED-622B-4530-84DC-24D85704EA62}

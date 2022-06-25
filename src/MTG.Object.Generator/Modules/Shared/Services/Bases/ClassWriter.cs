@@ -5,13 +5,15 @@ using MTG.Object.Generator.Modules.Shared.Interfaces;
 namespace MTG.Object.Generator.Modules.Shared.Services.Bases;
 
 internal abstract class ClassWriter {
+    private readonly IDirectoryService _directoryService;
     private readonly IFileService _fileService;
     private readonly ILogger<ClassWriter> _logger;
     private string TargetFolder => _fileService.GetFullPath(_fileService.GetFullPath(GetRelativePath()));
 
-    protected ClassWriter(IFileService fileService, ILogger<ClassWriter> logger) {
-        _fileService = Guard.Against.Null(fileService, nameof(fileService));
-        _logger = Guard.Against.Null(logger, nameof(logger));
+    protected ClassWriter(IFileService fileService, ILogger<ClassWriter> logger, IDirectoryService directoryService) {
+        _fileService = Guard.Against.Null(fileService);
+        _logger = Guard.Against.Null(logger);
+        _directoryService = Guard.Against.Null(directoryService);
     }
 
     public void RemoveFolderIfExists() {
@@ -32,6 +34,14 @@ internal abstract class ClassWriter {
         CreateDirectoryIfNecessary(targetFolder);
         await WriteClassToFile(className, contents, cancellationToken, targetFolder);
     }
+
+    public (bool success, string? path) TryGetAbsolutePathFromCurrentApp(string projectRoot, string pathFromRoot) {
+        var currentDirectory = new DirectoryInfo(_directoryService.GetCurrentDirectory());
+
+        return CheckDirectory(projectRoot, pathFromRoot, currentDirectory);
+    }
+
+    protected abstract string GetRelativePath();
 
     private async Task WriteClassToFile(string className, string contents, CancellationToken cancellationToken,
         string targetFolder) {
@@ -58,5 +68,16 @@ internal abstract class ClassWriter {
         return targetFolder;
     }
 
-    protected abstract string GetRelativePath();
+    private (bool success, string? path) CheckDirectory(string projectRoot, string pathFromRoot,
+        DirectoryInfo? currentDirectory) {
+        if (currentDirectory is null) {
+            return (false, null);
+        }
+
+        if (currentDirectory.Name == projectRoot) {
+            return (true, _fileService.PathJoin(currentDirectory.FullName, pathFromRoot));
+        }
+
+        return CheckDirectory(projectRoot, pathFromRoot, currentDirectory.Parent);
+    }
 }
