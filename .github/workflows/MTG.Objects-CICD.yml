@@ -9,23 +9,28 @@ on:
         default: 'Manual build from GitHub UI'
   push:
     branches: [ feature/** ]
-    paths: 
+    paths:
       - '**/src/MTG.Objects/**'
   pull_request:
     branches: [ main ]
     types:
       - closed
-    paths: 
+    paths:
       - '**/src/MTG.Objects/**'
-    
+
 env:
   dotnet-version:  '6.0.x'
-      
+
 jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-    
+    # runs-on: ${{ matrix.os }}
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     os: [ubuntu-latest, macOS-latest, windows-latest]
+
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -37,34 +42,34 @@ jobs:
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test '/home/runner/work/MTG.Objects/MTG.Objects/tests/MTG.Objects.Tests.Unit/MTG.Objects.Tests.Unit.csproj' --no-restore
+      run: dotnet test --no-restore
     - name: Publish
-      run: dotnet publish '/home/runner/work/MTG.Objects/MTG.Objects/src/MTG.Objects/MTG.Objects.csproj' -c Release -o publish/source
+      run: dotnet publish src/MTG.Objects/MTG.Objects.csproj -c Release -o publish/source
     - name: Create nupkg
-      run: dotnet pack '/home/runner/work/MTG.Objects/MTG.Objects/src/MTG.Objects/MTG.Objects.csproj' -c Release -o publish/nuget
+      run: dotnet pack src/MTG.Objects/MTG.Objects.csproj -c Release -o publish/nuget
     - name: Upload Source
       uses: actions/upload-artifact@v2.3.1
       with:
         name: source
-        path: /home/runner/work/MTG.Objects/MTG.Objects/publish/source/**
+        path: publish/source/**
         retention-days: 5
         if-no-files-found: error
     - name: Upload NuGet
       uses: actions/upload-artifact@v2.3.1
       with:
         name: nuget
-        path: /home/runner/work/MTG.Objects/MTG.Objects/publish/nuget/**
+        path: publish/nuget/**
         retention-days: 5
         if-no-files-found: error
-        
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
-    
+
     environment:
       name: Production
-    
+
     env:
       NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY_MTG_OBJECTS }}
       NUGET_URL: https://api.nuget.org/v3/index.json
@@ -77,24 +82,24 @@ jobs:
         with:
           dotnet-version: ${{ env.dotnet-version }}
           source-url: ${{ env.NUGET_URL }}
-          
+
       - name: Download Source
         uses: actions/download-artifact@v2.1.0
         with:
           name: source
           path: ./dist/source
-      
+
       - name: Download NuGet
         uses: actions/download-artifact@v2.1.0
         id: download-nuget
         with:
           name: nuget
           path: ./dist/nuget
-      
+
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: ./dist
-        
+
       - name: Push Nuget packages
         shell: bash
         run: |
