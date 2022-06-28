@@ -27,7 +27,6 @@ public class SetClassWriterTests {
     public void GetRelativePath_GivenATargetParent_ShouldReturnTargetPath() {
         //assemble
         var writer = new SetClassWriter(_fileService, _logger, _directoryService);
-        var expectedStatus = true;
         var targetFolder = $"Generated{Slash}TestType";
         var expectedPath = new DirectoryInfo($"{Slash}code{Slash}{SolutionFolderName}{Slash}{targetFolder}").FullName;
         var currentAssemblyPath = $"{Slash}code{Slash}{SolutionFolderName}{Slash}Generator{Slash}bin{Slash}Debug{Slash}net6.0";
@@ -46,7 +45,6 @@ public class SetClassWriterTests {
     public void GetRelativePath_GivenCurrentPathIsRoot_ShouldReturnTargetPath() {
         //assemble
         var writer = new SetClassWriter(_fileService, _logger, _directoryService);
-        var expectedStatus = true;
         var targetFolder = $"Generated{Slash}TestType";
         var expectedPath = new DirectoryInfo($"{Slash}code{Slash}{SolutionFolderName}{Slash}{targetFolder}").FullName;
         var currentAssemblyPath = $"{Slash}code{Slash}{SolutionFolderName}";
@@ -65,7 +63,6 @@ public class SetClassWriterTests {
     public void GetRelativePath_GivenTargetNotInHeirarchy_ShouldReturnFalseAndNull() {
         //assemble
         var writer = new SetClassWriter(_fileService, _logger, _directoryService);
-        var expectedStatus = true;
         var targetFolder = $"Generated{Slash}TestType";
         var currentAssemblyPath = "{Slash}code{Slash}SomeWeirdFolder{Slash}With{Slash}Lots{Slash}Of{Slash}Folders";
 
