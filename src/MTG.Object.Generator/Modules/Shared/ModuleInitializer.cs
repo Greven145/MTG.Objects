@@ -13,7 +13,7 @@ internal class ModuleInitializer : IModule {
         services.AddSingleton<ClientPolicy>();
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<IDirectoryService, DirectoryService>();
-        services.AddScoped<IMTGJsonClient, MTGJsonClient>();
+        services.AddScoped<IMtgJsonClient, MtgJsonClient>();
         services
             .AddHttpClient(HttpClientNames.MTGJson)
             .AddPolicyHandler((provider, _) => provider.GetService<ClientPolicy>()?.ExponentialBackOff);

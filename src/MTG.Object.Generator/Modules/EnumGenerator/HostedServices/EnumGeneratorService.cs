@@ -11,14 +11,14 @@ namespace MTG.Object.Generator.Modules.EnumGenerator.HostedServices;
 
 internal class EnumGeneratorService : CompletableBackgroundService {
     private readonly IClassWriter _classWriter;
-    private readonly IMTGJsonClient _client;
+    private readonly IMtgJsonClient _client;
     private readonly IEnumCodeGenerator _codeGenerator;
     private readonly IEnumProcessor _enumProcessor;
     private readonly IJsonParser _jsonParser;
 
     public EnumGeneratorService(IHostApplicationLifetime hostApplicationLifetime, IJsonParser jsonParser,
         IEnumClassWriter classWriter, IEnumProcessor enumProcessor, IEnumCodeGenerator codeGenerator,
-        IMTGJsonClient client) : base(hostApplicationLifetime) {
+        IMtgJsonClient client) : base(hostApplicationLifetime) {
         _client = client;
         _jsonParser = Guard.Against.Null(jsonParser);
         _classWriter = Guard.Against.Null(classWriter);

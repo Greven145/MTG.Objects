@@ -44,7 +44,7 @@ public class MultiverseId : ValueObject
         return Equals((MultiverseId)obj);
     }
 
-    protected bool Equals(MultiverseId other)
+    protected virtual bool Equals(MultiverseId other)
     {
         return _id == other._id;
     }

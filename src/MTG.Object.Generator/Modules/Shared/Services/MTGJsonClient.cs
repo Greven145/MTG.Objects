@@ -5,21 +5,19 @@ using MTG.Object.Generator.Modules.Shared.Interfaces;
 
 namespace MTG.Object.Generator.Modules.Shared.Services;
 
-internal class MTGJsonClient : IMTGJsonClient {
+internal class MtgJsonClient : IMtgJsonClient {
     private const string ApiHost = "mtgjson.com";
     private const string ApiPath = "api";
     private const string ApiVersion = "v5";
-    private static readonly Uri BaseUri;
+
+    private static readonly Uri BaseUri = new UriBuilder {
+        Host = ApiHost,
+        Scheme = Uri.UriSchemeHttps
+    }.Uri;
+
     private readonly IHttpClientFactory _clientFactory;
 
-    static MTGJsonClient() {
-        BaseUri = new UriBuilder {
-            Host = ApiHost,
-            Scheme = Uri.UriSchemeHttps
-        }.Uri;
-    }
-
-    public MTGJsonClient(IHttpClientFactory clientFactory) {
+    public MtgJsonClient(IHttpClientFactory clientFactory) {
         _clientFactory = clientFactory;
     }
 

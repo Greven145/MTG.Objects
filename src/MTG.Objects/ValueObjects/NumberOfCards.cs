@@ -51,7 +51,7 @@ public class NumberOfCards : ValueObject
         return _number.ToString(new NumberFormatInfo());
     }
 
-    protected bool Equals(NumberOfCards other)
+    protected virtual bool Equals(NumberOfCards other)
     {
         return _number == other._number;
     }

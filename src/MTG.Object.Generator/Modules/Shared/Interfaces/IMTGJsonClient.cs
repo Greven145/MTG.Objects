@@ -2,7 +2,7 @@
 
 namespace MTG.Object.Generator.Modules.Shared.Interfaces;
 
-internal interface IMTGJsonClient {
+internal interface IMtgJsonClient {
     ValueTask<string> GetEnums();
     ValueTask<SetRequestObject> GetSets();
 }

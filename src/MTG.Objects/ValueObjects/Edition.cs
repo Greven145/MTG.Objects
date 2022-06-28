@@ -4,18 +4,11 @@ namespace MTG.Objects.ValueObjects;
 
 public class Edition : ValueObject
 {
-    private static readonly Dictionary<string, string> CodeToName;
-    private static readonly Dictionary<string, string> NameToCode;
+    private static readonly Dictionary<string, string> CodeToName = Sets.SetList;
+    private static readonly Dictionary<string, string> NameToCode = new (CodeToName.Select(kv => new KeyValuePair<string, string>(kv.Value, kv.Key)));
     private readonly string _code;
 
     private readonly string _name;
-
-    static Edition()
-    {
-        CodeToName = Sets.SetList;
-        NameToCode =
-            new Dictionary<string, string>(CodeToName.Select(kv => new KeyValuePair<string, string>(kv.Value, kv.Key)));
-    }
 
     private Edition(string name, string code)
     {

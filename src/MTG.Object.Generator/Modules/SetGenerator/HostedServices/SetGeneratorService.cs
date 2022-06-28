@@ -10,11 +10,11 @@ namespace MTG.Object.Generator.Modules.SetGenerator.HostedServices;
 
 internal class SetGeneratorService : CompletableBackgroundService {
     private readonly IClassWriter _classWriter;
-    private readonly IMTGJsonClient _client;
+    private readonly IMtgJsonClient _client;
     private readonly ISetCodeGenerator _codeGenerator;
 
     public SetGeneratorService(IHostApplicationLifetime hostApplicationLifetime,
-        ISetClassWriter classWriter, ISetCodeGenerator codeGenerator, IMTGJsonClient client) : base(
+        ISetClassWriter classWriter, ISetCodeGenerator codeGenerator, IMtgJsonClient client) : base(
         hostApplicationLifetime) {
         _classWriter = Guard.Against.Null(classWriter);
         _codeGenerator = Guard.Against.Null(codeGenerator);
