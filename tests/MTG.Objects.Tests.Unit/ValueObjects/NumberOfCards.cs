@@ -27,7 +27,7 @@ public class NumberOfCardsTests
     public void Constructor_WhenGivenANegativeNumber_ThrowAnException()
     {
         //assemble
-        NumberOfCards BadConstructorCall() => new (-1);
+        static NumberOfCards BadConstructorCall() => new (-1);
 
         //act
         var result = FluentActions.Invoking(BadConstructorCall);

@@ -27,7 +27,7 @@ public class MultiverseIdTests
     public void Constructor_WhenGivenANegativeNumber_ThrowAnException()
     {
         //assemble
-        MultiverseId BadConstructorCall() => new (-1);
+        static MultiverseId BadConstructorCall() => new (-1);
 
         //act
         var result = FluentActions.Invoking(BadConstructorCall);

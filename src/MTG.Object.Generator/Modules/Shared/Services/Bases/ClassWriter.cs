@@ -32,7 +32,7 @@ internal abstract class ClassWriter {
 
         var targetFolder = HandleSubFolder(subFolder);
         CreateDirectoryIfNecessary(targetFolder);
-        await WriteClassToFile(className, contents, cancellationToken, targetFolder);
+        await WriteClassToFile(className, contents, targetFolder, cancellationToken);
     }
 
     public (bool success, string? path) TryGetAbsolutePathFromCurrentApp(string projectRoot, string pathFromRoot) {
@@ -43,8 +43,8 @@ internal abstract class ClassWriter {
 
     protected abstract string GetRelativePath();
 
-    private async Task WriteClassToFile(string className, string contents, CancellationToken cancellationToken,
-        string targetFolder) {
+    private async Task WriteClassToFile(string className, string contents,
+        string targetFolder, CancellationToken cancellationToken) {
         var fileName = Path.Combine(targetFolder, $"{className}.cs");
         _logger.LogInformation("Writing contents to {fileName}", fileName);
         await _fileService.WriteAllTextAsync(fileName, contents, cancellationToken);

@@ -10,8 +10,6 @@ public class Edition : ValueObject {
 
     private readonly string _name;
     
-    private static readonly Edition UnknownEdition = new ("Unknown", "Unknown");
-
     static Edition() {
         CodeToName = Sets.SetList;
         NameToCode =
