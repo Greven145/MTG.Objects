@@ -7,8 +7,8 @@ using MTG.Object.Generator.Modules.Shared.Interfaces;
 namespace MTG.Object.Generator.Tests.Unit.Modules.SetGenerator.Services;
 
 public class SetClassWriterTests {
-    private static readonly char Slash = Path.DirectorySeparatorChar;
     private const string SolutionFolderName = "TestSolution";
+    private static readonly char Slash = Path.DirectorySeparatorChar;
     private readonly IDirectoryService _directoryService;
 
     private readonly IFileService _fileService;
@@ -29,7 +29,8 @@ public class SetClassWriterTests {
         var writer = new SetClassWriter(_fileService, _logger, _directoryService);
         var targetFolder = $"Generated{Slash}TestType";
         var expectedPath = new DirectoryInfo($"{Slash}code{Slash}{SolutionFolderName}{Slash}{targetFolder}").FullName;
-        var currentAssemblyPath = $"{Slash}code{Slash}{SolutionFolderName}{Slash}Generator{Slash}bin{Slash}Debug{Slash}net6.0";
+        var currentAssemblyPath =
+            $"{Slash}code{Slash}{SolutionFolderName}{Slash}Generator{Slash}bin{Slash}Debug{Slash}net6.0";
 
         Mock.Get(_directoryService).Setup(d => d.GetCurrentDirectory()).Returns(currentAssemblyPath);
 
@@ -60,7 +61,7 @@ public class SetClassWriterTests {
     }
 
     [Fact]
-    public void GetRelativePath_GivenTargetNotInHeirarchy_ShouldReturnFalseAndNull() {
+    public void GetRelativePath_GivenTargetNotInHierarchy_ShouldReturnFalseAndNull() {
         //assemble
         var writer = new SetClassWriter(_fileService, _logger, _directoryService);
         var targetFolder = $"Generated{Slash}TestType";

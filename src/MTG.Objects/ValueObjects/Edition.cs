@@ -1,23 +1,32 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using MTG.Objects.Set;
+﻿using MTG.Objects.Set;
 
 namespace MTG.Objects.ValueObjects;
 
-public class Edition : ValueObject {
+public class Edition : ValueObject
+{
     private static readonly Dictionary<string, string> CodeToName;
     private static readonly Dictionary<string, string> NameToCode;
     private readonly string _code;
 
     private readonly string _name;
-    
-    static Edition() {
+
+    static Edition()
+    {
         CodeToName = Sets.SetList;
         NameToCode =
             new Dictionary<string, string>(CodeToName.Select(kv => new KeyValuePair<string, string>(kv.Value, kv.Key)));
     }
 
-    public static (bool Successful, Edition? Edition) TryParse(ReadOnlySpan<char> input) {
-        if (input.IsEmpty) {
+    private Edition(string name, string code)
+    {
+        _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+        _code = Guard.Against.NullOrWhiteSpace(code, nameof(code));
+    }
+
+    public static (bool Successful, Edition? Edition) TryParse(ReadOnlySpan<char> input)
+    {
+        if (input.IsEmpty)
+        {
             return (false, null);
         }
 
@@ -26,16 +35,29 @@ public class Edition : ValueObject {
         var closingParenthesisIndex = trimmed.IndexOf(')');
 
 
-        if (openingParenthesisIndex == -1 || closingParenthesisIndex == -1) {
+        if (openingParenthesisIndex == -1 || closingParenthesisIndex == -1)
+        {
             return ParsePartialSetIdentifier(trimmed);
         }
 
         return ParseFullEditionIdentifier(trimmed, openingParenthesisIndex, closingParenthesisIndex);
     }
 
-    private static (bool successful, Edition? edition) ParsePartialSetIdentifier(ReadOnlySpan<char> trimmed) {
+    public static implicit operator string(Edition edition)
+    {
+        return $"{edition._name} ({edition._code})";
+    }
+
+    public void Deconstruct(out string name, out string code)
+    {
+        name = _name;
+        code = _code;
+    }
+
+    private static (bool successful, Edition? edition) ParsePartialSetIdentifier(ReadOnlySpan<char> trimmed)
+    {
         var nameOrCode = trimmed.ToString();
-        
+
         if (CodeToName.TryGetValue(nameOrCode, out var name))
         {
             return (true, new Edition(name, nameOrCode));
@@ -49,28 +71,19 @@ public class Edition : ValueObject {
         return (false, null);
     }
 
-    private static (bool successful, Edition? edition) ParseFullEditionIdentifier(ReadOnlySpan<char> trimmed, int openingParenthesisIndex, int closingParenthesisIndex) {
+    private static (bool successful, Edition? edition) ParseFullEditionIdentifier(ReadOnlySpan<char> trimmed,
+        int openingParenthesisIndex, int closingParenthesisIndex)
+    {
         var name = trimmed[..openingParenthesisIndex].TrimEnd();
         var code = trimmed[(openingParenthesisIndex + 1)..closingParenthesisIndex].Trim();
 
         var codeAsString = code.ToString();
 
-        if (CodeToName.TryGetValue(codeAsString, out var dictName) && dictName == name.ToString()) {
+        if (CodeToName.TryGetValue(codeAsString, out var dictName) && dictName == name.ToString())
+        {
             return (true, new Edition(name.ToString(), codeAsString));
         }
 
         return (false, null);
-    }
-
-    private Edition(string name, string code) {
-        _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-        _code = Guard.Against.NullOrWhiteSpace(code, nameof(code));
-    }
-
-    public static implicit operator string(Edition edition) => $"{edition._name} ({edition._code})";
-
-    public void Deconstruct(out string name, out string code) {
-        name = _name;
-        code = _code;
     }
 }

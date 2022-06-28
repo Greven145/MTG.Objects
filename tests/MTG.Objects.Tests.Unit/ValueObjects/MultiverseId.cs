@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using MTG.Objects.ValueObjects;
 using Xunit;
 
 namespace MTG.Objects.Tests.Unit.ValueObjects;
+
 public class MultiverseIdTests
 {
     [Fact]
@@ -27,11 +24,14 @@ public class MultiverseIdTests
     public void Constructor_WhenGivenANegativeNumber_ThrowAnException()
     {
         //assemble
-        static MultiverseId BadConstructorCall() => new (-1);
+        static MultiverseId BadConstructorCall()
+        {
+            return new MultiverseId(-1);
+        }
 
         //act
         var result = FluentActions.Invoking(BadConstructorCall);
-        
+
         //assert
         result.Should().Throw<ArgumentException>();
     }
@@ -110,7 +110,7 @@ public class MultiverseIdTests
     {
         //assemble
         var sourceId = new MultiverseId(12345);
-        object targetId = new object();
+        var targetId = new object();
 
         //act
         var actualResult = sourceId.Equals(targetId);

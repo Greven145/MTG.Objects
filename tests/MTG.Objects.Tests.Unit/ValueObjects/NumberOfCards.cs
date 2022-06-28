@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using MTG.Objects.ValueObjects;
 using Xunit;
 
 namespace MTG.Objects.Tests.Unit.ValueObjects;
+
 public class NumberOfCardsTests
 {
     [Fact]
@@ -17,21 +14,24 @@ public class NumberOfCardsTests
         var expectedInteger = 4;
 
         //act
-        var NumberOfCards = new NumberOfCards(4);
+        var numberOfCards = new NumberOfCards(4);
 
         //assert
-        NumberOfCards.Should().Match<NumberOfCards>(x => x == expectedInteger);
+        numberOfCards.Should().Match<NumberOfCards>(x => x == expectedInteger);
     }
 
     [Fact]
     public void Constructor_WhenGivenANegativeNumber_ThrowAnException()
     {
         //assemble
-        static NumberOfCards BadConstructorCall() => new (-1);
+        static NumberOfCards BadConstructorCall()
+        {
+            return new NumberOfCards(-1);
+        }
 
         //act
         var result = FluentActions.Invoking(BadConstructorCall);
-        
+
         //assert
         result.Should().Throw<ArgumentException>();
     }
@@ -41,10 +41,10 @@ public class NumberOfCardsTests
     {
         //assemble
         var expectedInteger = 4;
-        var NumberOfCards = new NumberOfCards(expectedInteger);
+        var numberOfCards = new NumberOfCards(expectedInteger);
 
         //act
-        int result = NumberOfCards;
+        int result = numberOfCards;
 
         //assert
         result.Should().Be(expectedInteger);
@@ -110,7 +110,7 @@ public class NumberOfCardsTests
     {
         //assemble
         var sourceId = new NumberOfCards(4);
-        object targetId = new object();
+        var targetId = new object();
 
         //act
         var actualResult = sourceId.Equals(targetId);
