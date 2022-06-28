@@ -29,11 +29,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{A2E19352-8D90-49EF-96FB-67E345412557}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\dotnet-linux-mac.yml = .github\workflows\dotnet-linux-mac.yml
+		.github\workflows\dotnet-windows.yml = .github\workflows\dotnet-windows.yml
 		.github\workflows\MTG.Objects-CICD.yml = .github\workflows\MTG.Objects-CICD.yml
+		.github\workflows\MTG.Objects.Generator-Runner.yml = .github\workflows\MTG.Objects.Generator-Runner.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MTG.Object.Generator.Tests.Unit", "tests\MTG.Object.Generator.Tests.Unit\MTG.Object.Generator.Tests.Unit.csproj", "{A2F9E58D-02AA-4239-85C5-CA9091C05F98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTG.Object.Generator.Tests.Unit", "tests\MTG.Object.Generator.Tests.Unit\MTG.Object.Generator.Tests.Unit.csproj", "{A2F9E58D-02AA-4239-85C5-CA9091C05F98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
