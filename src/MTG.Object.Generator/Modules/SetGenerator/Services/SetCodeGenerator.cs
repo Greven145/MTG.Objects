@@ -16,7 +16,7 @@ internal class SetCodeGenerator : CodeGenerator, ISetCodeGenerator {
     }
 
     public override void GenerateHeader(StringBuilder classBuilder, string @namespace, params string[] subNamespaces) {
-        base.GenerateHeader(classBuilder, "Set");
+        base.GenerateHeader(classBuilder, "Set", subNamespaces);
         classBuilder.AppendLine(
             $"[GeneratedCode(\"MTG.Object.Generator.Modules.SetGenerator.Services.SetCodeGenerator\", \"{Assembly.GetExecutingAssembly().GetName().Version!.ToString()}\")]");
         classBuilder.AppendLine("public sealed class Sets : Dictionary<string,string> {");

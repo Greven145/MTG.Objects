@@ -12,7 +12,7 @@ internal class EnumCodeGenerator : CodeGenerator, IEnumCodeGenerator {
     }
 
     public override void GenerateHeader(StringBuilder classBuilder, string @namespace, params string[] subNamespaces) {
-        base.GenerateHeader(classBuilder, $"Enum.{@namespace}");
+        base.GenerateHeader(classBuilder, $"Enum.{@namespace}", subNamespaces);
         classBuilder.AppendLine(
             $"[GeneratedCode(\"MTG.Object.Generator.Modules.EnumGenerator.Services.EnumCodeGenerator\", \"{Assembly.GetExecutingAssembly().GetName().Version!.ToString()}\")]");
         classBuilder.AppendLine($"public sealed class {subNamespaces[0]} : SmartEnum<{subNamespaces[0]}> {{");
