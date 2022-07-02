@@ -15,7 +15,7 @@ public class MultiverseId : ValueObject {
 
     public static implicit operator string(MultiverseId card) => card._id.ToString(new NumberFormatInfo());
 
-    public static explicit operator MultiverseId(int id) => new MultiverseId(id);
+    public static explicit operator MultiverseId(int id) => new(id);
 
     public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), _id);
 
