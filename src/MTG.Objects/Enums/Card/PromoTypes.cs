@@ -43,9 +43,10 @@ public sealed class PromoTypes : SmartEnum<PromoTypes> {
     public static readonly PromoTypes Release = new(nameof(Release), 32);
     public static readonly PromoTypes Setpromo = new(nameof(Setpromo), 33);
     public static readonly PromoTypes Stamped = new(nameof(Stamped), 34);
-    public static readonly PromoTypes Themepack = new(nameof(Themepack), 35);
-    public static readonly PromoTypes Thick = new(nameof(Thick), 36);
-    public static readonly PromoTypes Tourney = new(nameof(Tourney), 37);
-    public static readonly PromoTypes Wizardsplaynetwork = new(nameof(Wizardsplaynetwork), 38);
+    public static readonly PromoTypes Textured = new(nameof(Textured), 35);
+    public static readonly PromoTypes Themepack = new(nameof(Themepack), 36);
+    public static readonly PromoTypes Thick = new(nameof(Thick), 37);
+    public static readonly PromoTypes Tourney = new(nameof(Tourney), 38);
+    public static readonly PromoTypes Wizardsplaynetwork = new(nameof(Wizardsplaynetwork), 39);
     public PromoTypes(string name, int value) : base(name, value){}
 }
