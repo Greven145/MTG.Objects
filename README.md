@@ -20,12 +20,12 @@ The generator project will download data from MTGJson and create classes that ca
 ### Deck Parsing
 
 ```csharp
-    var deckName = "Tron";
-    var fileName = $"{deckName}.txt";
-    var filePath = "./path/to/deck/files";
+var deckName = "Tron";
+var fileName = $"{deckName}.txt";
+var filePath = "./path/to/deck/files";
 
-    var fileContents = await File.ReadAllLinesAsync(Path.Combine(filePath, fileName));
-    var (deck, errors) = Deck.Parse(fileContents, name);
+var fileContents = await File.ReadAllLinesAsync(Path.Combine(filePath, fileName));
+var (deck, errors) = Deck.Parse(fileContents, name);
 ```
 
 ### Value Objects
@@ -35,10 +35,10 @@ The generator project will download data from MTGJson and create classes that ca
 You can use the `Edition.TryParse()` static method to parse a set name or code into a complete object
 
 ```csharp
-    var (successful, value) = Edition.TryParse("Kaldheim");
-	if ( successful ){
-		Console.WriteLine(value);
-    }
+var (successful, value) = Edition.TryParse("Kaldheim");
+if ( successful ) {
+    Console.WriteLine(value);
+}
 ```
 
 ```text
@@ -46,10 +46,10 @@ Kaldheim (KHM)
 ```
 
 ```csharp
-    var (successful, value) = Edition.TryParse("M11");
-	if ( successful ){
-		Console.WriteLine(value);
-    }
+var (successful, value) = Edition.TryParse("M11");
+if ( successful ) {
+    Console.WriteLine(value);
+}
 ```
 
 ```text
@@ -61,8 +61,8 @@ Magic 2011 (M11)
 You can use the `MultiverseId.TryParse()` static method to parse an Id into a valid format
 
 ```csharp
-    var id = (MultiverseId)12345;
-	Console.WriteLine(id.ToString());
+var id = (MultiverseId)12345;
+Console.WriteLine(id.ToString());
 ```
 
 ```text
@@ -70,7 +70,7 @@ You can use the `MultiverseId.TryParse()` static method to parse an Id into a va
 ```
 
 ```csharp
-    var id = (MultiverseId)(-321);
+var id = (MultiverseId)(-321);
 ```
 
 ```text

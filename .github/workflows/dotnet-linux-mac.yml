@@ -1,4 +1,4 @@
-name: .NET
+name: Build and test - Linux/Mac
 
 on:
   push:
