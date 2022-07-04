@@ -3,6 +3,10 @@
 A collection of objects and utilities for working with Magic: The Gathering services and data. I would frequently have to write classes and objects when writing projects
 that worked with Magic cards, and have collected some here for ease of consumption and re-use
 
+[![MTG.Objects CI/CD](https://github.com/Greven145/MTG.Objects/actions/workflows/MTG.Objects-CICD.yml/badge.svg)](https://github.com/Greven145/MTG.Objects/actions/workflows/MTG.Objects-CICD.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Greven145_MTG.Objects&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Greven145_MTG.Objects)
+
+
 ## How to install
 
 Instructions can be found on the [NuGet page](TBD) for this repository.
