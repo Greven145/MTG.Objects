@@ -3,6 +3,10 @@ name: .Build and test - Windows/SonarQube
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**/src/**'
+      - '**/tests/**'
+      - '.github/workflows/dotnet-windows.yml'
   pull_request:
     branches: [ "main" ]
 

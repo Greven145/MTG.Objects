@@ -3,8 +3,11 @@ name: "CodeQL"
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**/src/**'
+      - '**/tests/**'
+      - '.github/workflows/dotnet-windows.yml'
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
     - cron: '34 3 * * 0'
@@ -34,10 +37,6 @@ jobs:
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
-
-    # - run: |
-    #   echo "Run, Build Application using script"
-    #   ./location_of_script_within_repo/buildscript.sh
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

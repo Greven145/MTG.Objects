@@ -3,6 +3,10 @@ name: Build and test - Linux/Mac
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**/src/**'
+      - '**/tests/**'
+      - '.github/workflows/dotnet-linux-mac.yml'    
   pull_request:
     branches: [ "main" ]
 

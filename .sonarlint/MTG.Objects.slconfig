@@ -1,0 +1,15 @@
+{
+  "ServerUri": "https://sonarcloud.io/",
+  "Organization": {
+    "Key": "greven145",
+    "Name": "Greven145"
+  },
+  "ProjectKey": "Greven145_MTG.Objects",
+  "ProjectName": "MTG.Objects",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AYGof4RMM7NULcEftrGj",
+      "ProfileTimestamp": "2022-03-31T10:15:41Z"
+    }
+  }
+}
