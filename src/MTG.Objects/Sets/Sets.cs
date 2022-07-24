@@ -19,6 +19,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "HTR18", "2018 Heroes of the Realm" },
             { "HTR19", "2019 Heroes of the Realm" },
             { "HTR20", "2020 Heroes of the Realm" },
+            { "P30A", "30th Anniversary Promos" },
             { "AFR", "Adventures in the Forgotten Realms" },
             { "AAFR", "Adventures in the Forgotten Realms Art Series" },
             { "MAFR", "Adventures in the Forgotten Realms Minigames" },
