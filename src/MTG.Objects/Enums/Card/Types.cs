@@ -33,11 +33,12 @@ public sealed class Types : SmartEnum<Types> {
     public static readonly Types Scheme = new(nameof(Scheme), 22);
     public static readonly Types See = new(nameof(See), 23);
     public static readonly Types Sorcery = new(nameof(Sorcery), 24);
-    public static readonly Types Summon = new(nameof(Summon), 25);
-    public static readonly Types Token = new(nameof(Token), 26);
-    public static readonly Types Tribal = new(nameof(Tribal), 27);
-    public static readonly Types Vanguard = new(nameof(Vanguard), 28);
-    public static readonly Types Wolf = new(nameof(Wolf), 29);
-    public static readonly Types Youll = new(nameof(Youll), 30);
+    public static readonly Types Sticker = new(nameof(Sticker), 25);
+    public static readonly Types Summon = new(nameof(Summon), 26);
+    public static readonly Types Token = new(nameof(Token), 27);
+    public static readonly Types Tribal = new(nameof(Tribal), 28);
+    public static readonly Types Vanguard = new(nameof(Vanguard), 29);
+    public static readonly Types Wolf = new(nameof(Wolf), 30);
+    public static readonly Types Youll = new(nameof(Youll), 31);
     public Types(string name, int value) : base(name, value){}
 }

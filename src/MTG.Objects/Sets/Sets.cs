@@ -584,6 +584,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PUMA", "Ultimate Box Topper" },
             { "UMA", "Ultimate Masters" },
             { "UNF", "Unfinity" },
+            { "SUNF", "Unfinity Sticker Sheets" },
             { "UGL", "Unglued" },
             { "UNH", "Unhinged" },
             { "PUNH", "Unhinged Promos" },
