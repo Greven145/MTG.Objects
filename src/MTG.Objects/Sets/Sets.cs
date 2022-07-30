@@ -626,7 +626,6 @@ public sealed class Sets : Dictionary<string,string> {
             { "WC03", "World Championship Decks 2003" },
             { "WC04", "World Championship Decks 2004" },
             { "PWOR", "World Championship Promos" },
-            { "PWCQ", "World Magic Cup Qualifiers" },
             { "WWK", "Worldwake" },
             { "PWWK", "Worldwake Promos" },
             { "PSS2", "XLN Standard Showdown" },
