@@ -25,13 +25,14 @@ public sealed class Type : SmartEnum<Type> {
     public static readonly Type IntroPack = new(nameof(IntroPack), 14);
     public static readonly Type Jumpstart = new(nameof(Jumpstart), 15);
     public static readonly Type MTGOThemeDeck = new(nameof(MTGOThemeDeck), 16);
-    public static readonly Type PlanechaseDeck = new(nameof(PlanechaseDeck), 17);
-    public static readonly Type PlaneswalkerDeck = new(nameof(PlaneswalkerDeck), 18);
-    public static readonly Type PremiumDeck = new(nameof(PremiumDeck), 19);
-    public static readonly Type SpellslingerStarterKit = new(nameof(SpellslingerStarterKit), 20);
-    public static readonly Type StarterDeck = new(nameof(StarterDeck), 21);
-    public static readonly Type ThemeDeck = new(nameof(ThemeDeck), 22);
-    public static readonly Type WelcomeDeck = new(nameof(WelcomeDeck), 23);
-    public static readonly Type WorldChampionshipDecks = new(nameof(WorldChampionshipDecks), 24);
+    public static readonly Type PioneerChallengerDeck = new(nameof(PioneerChallengerDeck), 17);
+    public static readonly Type PlanechaseDeck = new(nameof(PlanechaseDeck), 18);
+    public static readonly Type PlaneswalkerDeck = new(nameof(PlaneswalkerDeck), 19);
+    public static readonly Type PremiumDeck = new(nameof(PremiumDeck), 20);
+    public static readonly Type SpellslingerStarterKit = new(nameof(SpellslingerStarterKit), 21);
+    public static readonly Type StarterDeck = new(nameof(StarterDeck), 22);
+    public static readonly Type ThemeDeck = new(nameof(ThemeDeck), 23);
+    public static readonly Type WelcomeDeck = new(nameof(WelcomeDeck), 24);
+    public static readonly Type WorldChampionshipDecks = new(nameof(WorldChampionshipDecks), 25);
     public Type(string name, int value) : base(name, value){}
 }
