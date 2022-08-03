@@ -555,6 +555,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "STH", "Stronghold" },
             { "PSTH", "Stronghold Promos" },
             { "SUM", "Summer Magic / Edgar" },
+            { "PSVC", "Summer Vacation Promos 2022" },
             { "PSUM", "Summer of Magic" },
             { "PTKDF", "Tarkir Dragonfury" },
             { "TMP", "Tempest" },
