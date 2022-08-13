@@ -10,7 +10,8 @@ namespace MTG.Objects.Enum.Card;
 public sealed class SecurityStamp : SmartEnum<SecurityStamp> {
     public static readonly SecurityStamp Acorn = new(nameof(Acorn), 0);
     public static readonly SecurityStamp Arena = new(nameof(Arena), 1);
-    public static readonly SecurityStamp Oval = new(nameof(Oval), 2);
-    public static readonly SecurityStamp Triangle = new(nameof(Triangle), 3);
+    public static readonly SecurityStamp Heart = new(nameof(Heart), 2);
+    public static readonly SecurityStamp Oval = new(nameof(Oval), 3);
+    public static readonly SecurityStamp Triangle = new(nameof(Triangle), 4);
     public SecurityStamp(string name, int value) : base(name, value){}
 }
