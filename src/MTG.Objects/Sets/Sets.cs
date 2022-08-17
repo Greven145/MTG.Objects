@@ -546,6 +546,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "SCH", "Store Championships 2022" },
             { "SNC", "Streets of New Capenna" },
             { "PSNC", "Streets of New Capenna Promos" },
+            { "PTSNC", "Streets of New Capenna Southeast Asia Tokens" },
             { "ASTX", "Strixhaven Art Series" },
             { "STA", "Strixhaven Mystical Archive" },
             { "STX", "Strixhaven: School of Mages" },
