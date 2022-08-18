@@ -469,6 +469,8 @@ public sealed class Sets : Dictionary<string,string> {
             { "ONS", "Onslaught" },
             { "PONS", "Onslaught Promos" },
             { "PHEL", "Open the Helvault" },
+            { "O90P", "Oversized 90's Promos" },
+            { "OLEP", "Oversized League Prizes" },
             { "Q06", "Pioneer Challenger Decks 2021" },
             { "PLC", "Planar Chaos" },
             { "PPLC", "Planar Chaos Promos" },
