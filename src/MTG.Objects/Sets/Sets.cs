@@ -145,6 +145,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PDOM", "Dominaria Promos" },
             { "DMR", "Dominaria Remastered" },
             { "DMU", "Dominaria United" },
+            { "PDWA", "Dominaria United 'Wa' Tokens" },
             { "ADMU", "Dominaria United Art Series" },
             { "DMC", "Dominaria United Commander" },
             { "PDMU", "Dominaria United Promos" },
