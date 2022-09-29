@@ -574,6 +574,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "BRO", "The Brothers' War" },
             { "DRK", "The Dark" },
             { "PLIST", "The List" },
+            { "UPLIST", "The List (Unfinity Foil Edition)" },
             { "THS", "Theros" },
             { "THB", "Theros Beyond Death" },
             { "PTHB", "Theros Beyond Death Promos" },
