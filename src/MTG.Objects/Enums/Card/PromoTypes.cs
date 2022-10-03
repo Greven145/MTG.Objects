@@ -42,13 +42,14 @@ public sealed class PromoTypes : SmartEnum<PromoTypes> {
     public static readonly PromoTypes Prerelease = new(nameof(Prerelease), 31);
     public static readonly PromoTypes Promopack = new(nameof(Promopack), 32);
     public static readonly PromoTypes Release = new(nameof(Release), 33);
-    public static readonly PromoTypes Setpromo = new(nameof(Setpromo), 34);
-    public static readonly PromoTypes Stamped = new(nameof(Stamped), 35);
-    public static readonly PromoTypes Surgefoil = new(nameof(Surgefoil), 36);
-    public static readonly PromoTypes Textured = new(nameof(Textured), 37);
-    public static readonly PromoTypes Themepack = new(nameof(Themepack), 38);
-    public static readonly PromoTypes Thick = new(nameof(Thick), 39);
-    public static readonly PromoTypes Tourney = new(nameof(Tourney), 40);
-    public static readonly PromoTypes Wizardsplaynetwork = new(nameof(Wizardsplaynetwork), 41);
+    public static readonly PromoTypes Schinesealtart = new(nameof(Schinesealtart), 34);
+    public static readonly PromoTypes Setpromo = new(nameof(Setpromo), 35);
+    public static readonly PromoTypes Stamped = new(nameof(Stamped), 36);
+    public static readonly PromoTypes Surgefoil = new(nameof(Surgefoil), 37);
+    public static readonly PromoTypes Textured = new(nameof(Textured), 38);
+    public static readonly PromoTypes Themepack = new(nameof(Themepack), 39);
+    public static readonly PromoTypes Thick = new(nameof(Thick), 40);
+    public static readonly PromoTypes Tourney = new(nameof(Tourney), 41);
+    public static readonly PromoTypes Wizardsplaynetwork = new(nameof(Wizardsplaynetwork), 42);
     public PromoTypes(string name, int value) : base(name, value){}
 }
