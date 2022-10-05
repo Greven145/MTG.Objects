@@ -116,6 +116,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "CC1", "Commander Collection: Green" },
             { "CMR", "Commander Legends" },
             { "CLB", "Commander Legends: Battle for Baldur's Gate" },
+            { "MCLB", "Commander Legends: Battle for Baldur's Gate Minigames" },
             { "CM1", "Commander's Arsenal" },
             { "OCM1", "Commander's Arsenal Oversized" },
             { "CON", "Conflux" },
