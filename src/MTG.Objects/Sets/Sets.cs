@@ -31,6 +31,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "ARB", "Alara Reborn" },
             { "PARB", "Alara Reborn Promos" },
             { "HBG", "Alchemy Horizons: Baldur's Gate" },
+            { "A23", "Alchemy: Dominaria" },
             { "YMID", "Alchemy: Innistrad" },
             { "YNEO", "Alchemy: Kamigawa" },
             { "YSNC", "Alchemy: New Capenna" },
