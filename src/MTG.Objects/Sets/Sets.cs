@@ -630,7 +630,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "VIS", "Visions" },
             { "WAR", "War of the Spark" },
             { "PWAR", "War of the Spark Promos" },
-            { "40K", "Warhammer 40,000" },
+            { "40K", "Warhammer 40,000 Commander" },
             { "WTH", "Weatherlight" },
             { "W16", "Welcome Deck 2016" },
             { "W17", "Welcome Deck 2017" },
