@@ -57,5 +57,7 @@ public sealed class KeywordActions : SmartEnum<KeywordActions> {
     public static readonly KeywordActions Connive = new(nameof(Connive), 46);
     public static readonly KeywordActions VentureIntoTheDungeon = new(nameof(VentureIntoTheDungeon), 47);
     public static readonly KeywordActions Convert = new(nameof(Convert), 48);
+    public static readonly KeywordActions OpenAnAttraction = new(nameof(OpenAnAttraction), 49);
+    public static readonly KeywordActions RollToVisitYourAttractions = new(nameof(RollToVisitYourAttractions), 50);
     public KeywordActions(string name, int value) : base(name, value){}
 }
