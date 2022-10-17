@@ -254,7 +254,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "GDY", "Game Day Promos" },
             { "GNT", "Game Night" },
             { "GN2", "Game Night 2019" },
-            { "GN3", "Game Night 2022" },
+            { "GN3", "Game Night: Free-for-All" },
             { "GTC", "Gatecrash" },
             { "PGTC", "Gatecrash Promos" },
             { "PGTW", "Gateway 2006" },
