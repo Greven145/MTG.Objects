@@ -198,6 +198,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "EMN", "Eldritch Moon" },
             { "PEMN", "Eldritch Moon Promos" },
             { "EMA", "Eternal Masters" },
+            { "PEWK", "Eternal Weekend 2022" },
             { "PELP", "European Land Program" },
             { "EVE", "Eventide" },
             { "PEVE", "Eventide Promos" },
