@@ -33,7 +33,7 @@ public sealed class Types : SmartEnum<Types> {
     public static readonly Types Scheme = new(nameof(Scheme), 22);
     public static readonly Types See = new(nameof(See), 23);
     public static readonly Types Sorcery = new(nameof(Sorcery), 24);
-    public static readonly Types Sticker = new(nameof(Sticker), 25);
+    public static readonly Types Stickers = new(nameof(Stickers), 25);
     public static readonly Types Summon = new(nameof(Summon), 26);
     public static readonly Types Token = new(nameof(Token), 27);
     public static readonly Types Tribal = new(nameof(Tribal), 28);
