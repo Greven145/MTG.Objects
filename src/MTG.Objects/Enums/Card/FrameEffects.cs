@@ -28,10 +28,11 @@ public sealed class FrameEffects : SmartEnum<FrameEffects> {
     public static readonly FrameEffects Shatteredglass = new(nameof(Shatteredglass), 17);
     public static readonly FrameEffects Showcase = new(nameof(Showcase), 18);
     public static readonly FrameEffects Snow = new(nameof(Snow), 19);
-    public static readonly FrameEffects Sunmoondfc = new(nameof(Sunmoondfc), 20);
-    public static readonly FrameEffects Textless = new(nameof(Textless), 21);
-    public static readonly FrameEffects Tombstone = new(nameof(Tombstone), 22);
-    public static readonly FrameEffects Upsidedowndfc = new(nameof(Upsidedowndfc), 23);
-    public static readonly FrameEffects Waxingandwaningmoondfc = new(nameof(Waxingandwaningmoondfc), 24);
+    public static readonly FrameEffects Storyspotlight = new(nameof(Storyspotlight), 20);
+    public static readonly FrameEffects Sunmoondfc = new(nameof(Sunmoondfc), 21);
+    public static readonly FrameEffects Textless = new(nameof(Textless), 22);
+    public static readonly FrameEffects Tombstone = new(nameof(Tombstone), 23);
+    public static readonly FrameEffects Upsidedowndfc = new(nameof(Upsidedowndfc), 24);
+    public static readonly FrameEffects Waxingandwaningmoondfc = new(nameof(Waxingandwaningmoondfc), 25);
     public FrameEffects(string name, int value) : base(name, value){}
 }
