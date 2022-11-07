@@ -588,6 +588,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "P10E", "Tenth Edition Promos" },
             { "BRO", "The Brothers' War" },
             { "BRC", "The Brothers' War Commander" },
+            { "PBRO", "The Brothers' War Promos" },
             { "BRR", "The Brothers' War Retro Artifacts" },
             { "DRK", "The Dark" },
             { "PLIST", "The List" },
