@@ -194,5 +194,6 @@ public sealed class KeywordAbilities : SmartEnum<KeywordAbilities> {
     public static readonly KeywordAbilities MoreThanMeetsTheEye = new(nameof(MoreThanMeetsTheEye), 183);
     public static readonly KeywordAbilities LivingMetal = new(nameof(LivingMetal), 184);
     public static readonly KeywordAbilities Unearth = new(nameof(Unearth), 185);
+    public static readonly KeywordAbilities Prototype = new(nameof(Prototype), 186);
     public KeywordAbilities(string name, int value) : base(name, value){}
 }
