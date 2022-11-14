@@ -339,6 +339,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PJUD", "Judgment Promos" },
             { "JMP", "Jumpstart" },
             { "J22", "Jumpstart 2022" },
+            { "FJ22", "Jumpstart 2022 Front Cards" },
             { "AJMP", "Jumpstart Arena Exclusives" },
             { "FJMP", "Jumpstart Front Cards" },
             { "J21", "Jumpstart: Historic Horizons" },
