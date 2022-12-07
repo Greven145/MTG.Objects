@@ -35,6 +35,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "YMID", "Alchemy: Innistrad" },
             { "YNEO", "Alchemy: Kamigawa" },
             { "YSNC", "Alchemy: New Capenna" },
+            { "YBRO", "Alchemy: The Brothers' War" },
             { "ALL", "Alliances" },
             { "AKH", "Amonkhet" },
             { "MP2", "Amonkhet Invocations" },
