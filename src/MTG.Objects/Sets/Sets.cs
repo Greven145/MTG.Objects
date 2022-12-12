@@ -338,6 +338,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "J20", "Judge Gift Cards 2020" },
             { "PJ21", "Judge Gift Cards 2021" },
             { "P22", "Judge Gift Cards 2022" },
+            { "P23", "Judge Gift Cards 2023" },
             { "JUD", "Judgment" },
             { "PJUD", "Judgment Promos" },
             { "JMP", "Jumpstart" },
