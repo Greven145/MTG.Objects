@@ -554,6 +554,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PSCG", "Scourge Promos" },
             { "SLC", "Secret Lair 30th Anniversary Countdown Kit" },
             { "SLD", "Secret Lair Drop" },
+            { "SLP", "Secret Lair Showdown" },
             { "SLU", "Secret Lair: Ultimate Edition" },
             { "PSDG", "Sega Dreamcast Cards" },
             { "7ED", "Seventh Edition" },
