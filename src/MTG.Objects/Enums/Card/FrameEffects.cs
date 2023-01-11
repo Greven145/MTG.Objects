@@ -18,21 +18,20 @@ public sealed class FrameEffects : SmartEnum<FrameEffects> {
     public static readonly FrameEffects Extendedart = new(nameof(Extendedart), 7);
     public static readonly FrameEffects Fandfc = new(nameof(Fandfc), 8);
     public static readonly FrameEffects Fullart = new(nameof(Fullart), 9);
-    public static readonly FrameEffects Gilded = new(nameof(Gilded), 10);
-    public static readonly FrameEffects Inverted = new(nameof(Inverted), 11);
-    public static readonly FrameEffects Legendary = new(nameof(Legendary), 12);
-    public static readonly FrameEffects Lesson = new(nameof(Lesson), 13);
-    public static readonly FrameEffects Miracle = new(nameof(Miracle), 14);
-    public static readonly FrameEffects Mooneldrazidfc = new(nameof(Mooneldrazidfc), 15);
-    public static readonly FrameEffects Nyxtouched = new(nameof(Nyxtouched), 16);
-    public static readonly FrameEffects Originpwdfc = new(nameof(Originpwdfc), 17);
-    public static readonly FrameEffects Shatteredglass = new(nameof(Shatteredglass), 18);
-    public static readonly FrameEffects Showcase = new(nameof(Showcase), 19);
-    public static readonly FrameEffects Snow = new(nameof(Snow), 20);
-    public static readonly FrameEffects Sunmoondfc = new(nameof(Sunmoondfc), 21);
-    public static readonly FrameEffects Textless = new(nameof(Textless), 22);
-    public static readonly FrameEffects Tombstone = new(nameof(Tombstone), 23);
-    public static readonly FrameEffects Upsidedowndfc = new(nameof(Upsidedowndfc), 24);
-    public static readonly FrameEffects Waxingandwaningmoondfc = new(nameof(Waxingandwaningmoondfc), 25);
+    public static readonly FrameEffects Inverted = new(nameof(Inverted), 10);
+    public static readonly FrameEffects Legendary = new(nameof(Legendary), 11);
+    public static readonly FrameEffects Lesson = new(nameof(Lesson), 12);
+    public static readonly FrameEffects Miracle = new(nameof(Miracle), 13);
+    public static readonly FrameEffects Mooneldrazidfc = new(nameof(Mooneldrazidfc), 14);
+    public static readonly FrameEffects Nyxtouched = new(nameof(Nyxtouched), 15);
+    public static readonly FrameEffects Originpwdfc = new(nameof(Originpwdfc), 16);
+    public static readonly FrameEffects Shatteredglass = new(nameof(Shatteredglass), 17);
+    public static readonly FrameEffects Showcase = new(nameof(Showcase), 18);
+    public static readonly FrameEffects Snow = new(nameof(Snow), 19);
+    public static readonly FrameEffects Sunmoondfc = new(nameof(Sunmoondfc), 20);
+    public static readonly FrameEffects Textless = new(nameof(Textless), 21);
+    public static readonly FrameEffects Tombstone = new(nameof(Tombstone), 22);
+    public static readonly FrameEffects Upsidedowndfc = new(nameof(Upsidedowndfc), 23);
+    public static readonly FrameEffects Waxingandwaningmoondfc = new(nameof(Waxingandwaningmoondfc), 24);
     public FrameEffects(string name, int value) : base(name, value){}
 }
