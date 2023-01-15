@@ -58,5 +58,6 @@ public sealed class AbilityWords : SmartEnum<AbilityWords> {
     public static readonly AbilityWords PackTactics = new(nameof(PackTactics), 47);
     public static readonly AbilityWords Coven = new(nameof(Coven), 48);
     public static readonly AbilityWords Alliance = new(nameof(Alliance), 49);
+    public static readonly AbilityWords Corrupted = new(nameof(Corrupted), 50);
     public AbilityWords(string name, int value) : base(name, value){}
 }
