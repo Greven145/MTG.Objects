@@ -570,7 +570,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "S99", "Starter 1999" },
             { "S00", "Starter 2000" },
             { "SCD", "Starter Commander Decks" },
-            { "SCH", "Store Championships 2022" },
+            { "SCH", "Store Championships" },
             { "SNC", "Streets of New Capenna" },
             { "MSNC", "Streets of New Capenna Minigames" },
             { "PSNC", "Streets of New Capenna Promos" },
