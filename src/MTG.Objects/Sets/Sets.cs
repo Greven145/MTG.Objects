@@ -496,6 +496,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "ONC", "Phyrexia: All Will Be One Commander" },
             { "WONE", "Phyrexia: All Will Be One Japanese Promo Tokens" },
             { "FONE", "Phyrexia: All Will Be One Jumpstart Front Cards" },
+            { "PONE", "Phyrexia: All Will Be One Promos" },
             { "Q06", "Pioneer Challenger Decks 2021" },
             { "Q08", "Pioneer Challenger Decks 2022" },
             { "PLC", "Planar Chaos" },
