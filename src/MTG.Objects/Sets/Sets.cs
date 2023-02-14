@@ -210,6 +210,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "EA1", "Explorer Anthology 1" },
             { "EA2", "Explorer Anthology 2" },
             { "E02", "Explorers of Ixalan" },
+            { "BCHR", "FBB Chronicles" },
             { "TFTH", "Face the Hydra" },
             { "FEM", "Fallen Empires" },
             { "FRF", "Fate Reforged" },
