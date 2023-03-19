@@ -578,6 +578,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "SHM", "Shadowmoor" },
             { "PSHM", "Shadowmoor Promos" },
             { "SIR", "Shadows Over Innistrad Remastered" },
+            { "SIS", "Shadows of the Past" },
             { "SOI", "Shadows over Innistrad" },
             { "PSOI", "Shadows over Innistrad Promos" },
             { "ALA", "Shards of Alara" },
