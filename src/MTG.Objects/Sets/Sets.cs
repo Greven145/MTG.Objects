@@ -440,6 +440,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PF21", "MagicFest 2021" },
             { "MOM", "March of the Machine" },
             { "MOC", "March of the Machine Commander" },
+            { "FMOM", "March of the Machine Jumpstart Front Cards" },
             { "MAT", "March of the Machine: The Aftermath" },
             { "A25", "Masters 25" },
             { "ME1", "Masters Edition" },
