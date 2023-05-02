@@ -441,6 +441,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "MOM", "March of the Machine" },
             { "AMOM", "March of the Machine Art Series" },
             { "MOC", "March of the Machine Commander" },
+            { "WMOM", "March of the Machine Japanese Promo Tokens" },
             { "FMOM", "March of the Machine Jumpstart Front Cards" },
             { "PMOM", "March of the Machine Promos" },
             { "MAT", "March of the Machine: The Aftermath" },
