@@ -653,6 +653,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "UGL", "Unglued" },
             { "UNH", "Unhinged" },
             { "PUNH", "Unhinged Promos" },
+            { "WHO", "Universes Beyond: Doctor Who" },
             { "SLX", "Universes Within" },
             { "2ED", "Unlimited Edition" },
             { "UND", "Unsanctioned" },
