@@ -248,6 +248,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "F16", "Friday Night Magic 2016" },
             { "F17", "Friday Night Magic 2017" },
             { "F18", "Friday Night Magic 2018" },
+            { "PCTB", "From Cute to Brute" },
             { "V15", "From the Vault: Angels" },
             { "V14", "From the Vault: Annihilation" },
             { "DRB", "From the Vault: Dragons" },
