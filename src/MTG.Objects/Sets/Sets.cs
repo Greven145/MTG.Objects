@@ -439,6 +439,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PF19", "MagicFest 2019" },
             { "PF20", "MagicFest 2020" },
             { "PF21", "MagicFest 2021" },
+            { "PF23", "MagicFest 2023" },
             { "MOM", "March of the Machine" },
             { "AMOM", "March of the Machine Art Series" },
             { "MOC", "March of the Machine Commander" },
