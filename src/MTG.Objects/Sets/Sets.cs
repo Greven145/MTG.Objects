@@ -612,6 +612,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "SUM", "Summer Magic / Edgar" },
             { "PSVC", "Summer Vacation Promos 2022" },
             { "PSUM", "Summer of Magic" },
+            { "ALTR", "Tales of Middle-earth Art Series" },
             { "LTC", "Tales of Middle-earth Commander" },
             { "PTKDF", "Tarkir Dragonfury" },
             { "TMP", "Tempest" },
