@@ -616,6 +616,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "ALTR", "Tales of Middle-earth Art Series" },
             { "LTC", "Tales of Middle-earth Commander" },
             { "FLTR", "Tales of Middle-earth Front Cards" },
+            { "PLTR", "Tales of Middle-earth Promos" },
             { "PTKDF", "Tarkir Dragonfury" },
             { "TMP", "Tempest" },
             { "PTMP", "Tempest Promos" },
