@@ -23,6 +23,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "P30T", "30th Anniversary Celebration Tokyo" },
             { "30A", "30th Anniversary Edition" },
             { "P30H", "30th Anniversary History Promos" },
+            { "P30M", "30th Anniversary Misc Promos" },
             { "P30A", "30th Anniversary Play Promos" },
             { "AFR", "Adventures in the Forgotten Realms" },
             { "AAFR", "Adventures in the Forgotten Realms Art Series" },
