@@ -691,6 +691,8 @@ public sealed class Sets : Dictionary<string,string> {
             { "WTH", "Weatherlight" },
             { "W16", "Welcome Deck 2016" },
             { "W17", "Welcome Deck 2017" },
+            { "WOE", "Wilds of Eldraine" },
+            { "WOT", "Wilds of Eldraine: Enchanting Tales" },
             { "PWPN", "Wizards Play Network 2008" },
             { "PW09", "Wizards Play Network 2009" },
             { "PW10", "Wizards Play Network 2010" },
