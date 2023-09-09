@@ -692,6 +692,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "WOE", "Wilds of Eldraine" },
             { "AWOE", "Wilds of Eldraine Art Series" },
             { "WOC", "Wilds of Eldraine Commander" },
+            { "WWOE", "Wilds of Eldraine Japanese Promo Tokens" },
             { "WOT", "Wilds of Eldraine: Enchanting Tales" },
             { "PW11", "Wizards Play Network 2011" },
             { "PW12", "Wizards Play Network 2012" },
