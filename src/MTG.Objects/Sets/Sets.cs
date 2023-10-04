@@ -704,6 +704,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PW21", "Wizards Play Network 2021" },
             { "PW22", "Wizards Play Network 2022" },
             { "PW23", "Wizards Play Network 2023" },
+            { "PW24", "Wizards Play Network 2024" },
             { "PWOS", "Wizards of the Coast Online Store" },
             { "WC97", "World Championship Decks 1997" },
             { "WC98", "World Championship Decks 1998" },
