@@ -40,6 +40,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "YSNC", "Alchemy: New Capenna" },
             { "YONE", "Alchemy: Phyrexia" },
             { "YBRO", "Alchemy: The Brothers' War" },
+            { "YWOE", "Alchemy: Wilds of Eldraine" },
             { "ALL", "Alliances" },
             { "AKH", "Amonkhet" },
             { "MP2", "Amonkhet Invocations" },
