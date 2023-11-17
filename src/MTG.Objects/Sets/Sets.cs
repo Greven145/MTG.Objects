@@ -648,6 +648,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "UPLIST", "The List (Unfinity Foil Edition)" },
             { "LTR", "The Lord of the Rings: Tales of Middle-earth" },
             { "LCI", "The Lost Caverns of Ixalan" },
+            { "ALCI", "The Lost Caverns of Ixalan Art Series" },
             { "LCC", "The Lost Caverns of Ixalan Commander" },
             { "SLCI", "The Lost Caverns of Ixalan Substitute Cards" },
             { "THS", "Theros" },
