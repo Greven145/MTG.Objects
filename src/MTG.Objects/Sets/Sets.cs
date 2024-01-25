@@ -520,6 +520,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "ONS", "Onslaught" },
             { "PONS", "Onslaught Promos" },
             { "PHEL", "Open the Helvault" },
+            { "OTJ", "Outlaws of Thunder Junction" },
             { "O90P", "Oversized 90's Promos" },
             { "OLEP", "Oversized League Prizes" },
             { "ONE", "Phyrexia: All Will Be One" },
