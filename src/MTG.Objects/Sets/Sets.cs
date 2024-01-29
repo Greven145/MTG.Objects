@@ -564,6 +564,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "RAV", "Ravnica: City of Guilds" },
             { "PRAV", "Ravnica: City of Guilds Promos" },
             { "CLU", "Ravnica: Clue Edition" },
+            { "FCLU", "Ravnica: Clue Edition Front Cards" },
             { "PRED", "Redemption Program" },
             { "PRCQ", "Regional Championship Qualifiers 2022" },
             { "PR23", "Regional Championship Qualifiers 2023" },
