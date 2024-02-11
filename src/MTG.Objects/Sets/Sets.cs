@@ -498,6 +498,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "MUL", "Multiverse Legends" },
             { "MKM", "Murders at Karlov Manor" },
             { "MKC", "Murders at Karlov Manor Commander" },
+            { "PMKM", "Murders at Karlov Manor Promos" },
             { "MB1", "Mystery Booster" },
             { "CMB1", "Mystery Booster Playtest Cards 2019" },
             { "CMB2", "Mystery Booster Playtest Cards 2021" },
