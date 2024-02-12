@@ -670,6 +670,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "TSP", "Time Spiral" },
             { "PTSP", "Time Spiral Promos" },
             { "TSR", "Time Spiral Remastered" },
+            { "PTSR", "Time Spiral Remastered Promos" },
             { "TSB", "Time Spiral Timeshifted" },
             { "TOR", "Torment" },
             { "PTOR", "Torment Promos" },
