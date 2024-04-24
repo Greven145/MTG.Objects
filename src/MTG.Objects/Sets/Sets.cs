@@ -154,6 +154,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "PM20", "Core Set 2020 Promos" },
             { "M21", "Core Set 2021" },
             { "PM21", "Core Set 2021 Promos" },
+            { "PCBB", "Cowboy Bebop" },
             { "AVOW", "Crimson Vow Art Series" },
             { "VOC", "Crimson Vow Commander" },
             { "OVOC", "Crimson Vow Commander Display Commanders" },
