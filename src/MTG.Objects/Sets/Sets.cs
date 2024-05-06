@@ -41,6 +41,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "YNEO", "Alchemy: Kamigawa" },
             { "YMKM", "Alchemy: Murders at Karlov Manor" },
             { "YSNC", "Alchemy: New Capenna" },
+            { "YOTJ", "Alchemy: Outlaws of Thunder Junction" },
             { "YONE", "Alchemy: Phyrexia" },
             { "YBRO", "Alchemy: The Brothers' War" },
             { "YWOE", "Alchemy: Wilds of Eldraine" },
