@@ -701,6 +701,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "UNH", "Unhinged" },
             { "PUNH", "Unhinged Promos" },
             { "SLX", "Universes Within" },
+            { "DA1", "Unknown Event" },
             { "2ED", "Unlimited Edition" },
             { "UND", "Unsanctioned" },
             { "UST", "Unstable" },
