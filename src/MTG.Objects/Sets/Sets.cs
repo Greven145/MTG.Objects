@@ -494,6 +494,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "AMH2", "Modern Horizons 2 Art Series" },
             { "MMH2", "Modern Horizons 2 Minigames" },
             { "PMH2", "Modern Horizons 2 Promos" },
+            { "H2R", "Modern Horizons 2 Timeshifts" },
             { "MH3", "Modern Horizons 3" },
             { "M3C", "Modern Horizons 3 Commander" },
             { "AMH1", "Modern Horizons Art Series" },
