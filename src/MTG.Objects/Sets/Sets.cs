@@ -256,6 +256,7 @@ public sealed class Sets : Dictionary<string,string> {
             { "AFC", "Forgotten Realms Commander" },
             { "OAFC", "Forgotten Realms Commander Display Commanders" },
             { "FDN", "Foundations" },
+            { "FFDN", "Foundations Front Cards" },
             { "4ED", "Fourth Edition" },
             { "4BB", "Fourth Edition Foreign Black Border" },
             { "FNM", "Friday Night Magic 2000" },
