@@ -30,7 +30,9 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    
+
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,6 +53,22 @@
     <PackageReference Include="ValueObject" Version="0.6.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
+
+  <!-- Source Generator Reference -->
+  <ItemGroup>
+    <ProjectReference Include="..\MTG.Objects.SourceGenerator\MTG.Objects.SourceGenerator.csproj" 
+                      OutputItemType="Analyzer" 
+                      ReferenceOutputAssembly="false" />
+    <!-- Reference the Tasks project to trigger JSON file downloads -->
+    <ProjectReference Include="..\MTG.Objects.SourceGenerator.Tasks\MTG.Objects.SourceGenerator.Tasks.csproj" 
+                      ReferenceOutputAssembly="false" 
+                      PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Import the targets file that downloads MTGJson data files -->
+  <Import Project="..\MTG.Objects.SourceGenerator.Tasks\MTG.Objects.SourceGenerator.Tasks.targets" />
+
+  <!-- Additional Files for Source Generation -->
 
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>

@@ -22,8 +22,4 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\MTG.Object.Generator\MTG.Object.Generator.csproj" />
-	</ItemGroup>
-
 </Project>

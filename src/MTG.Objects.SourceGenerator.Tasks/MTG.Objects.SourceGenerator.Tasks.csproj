@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <!-- This is a build task project, not an analyzer -->
+    <IsRoslynComponent>false</IsRoslynComponent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.0.0" />
+  </ItemGroup>
+
+  <!-- Package the targets file and task assembly -->
+  <ItemGroup>
+    <None Include="MTG.Objects.SourceGenerator.Tasks.targets" Pack="true" PackagePath="build" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="build\netstandard2.0" Visible="false" />
+  </ItemGroup>
+
+</Project>

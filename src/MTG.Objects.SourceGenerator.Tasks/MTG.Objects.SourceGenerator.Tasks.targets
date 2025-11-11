@@ -1,0 +1,36 @@
+<Project>
+  <!-- Determine the location of the tasks assembly -->
+  <PropertyGroup>
+    <!-- When building from source, use the tasks project's output -->
+    <MtgTasksAssemblyPath Condition="'$(MtgTasksAssemblyPath)' == '' AND Exists('$(MSBuildThisFileDirectory)bin\$(Configuration)\netstandard2.0\MTG.Objects.SourceGenerator.Tasks.dll')">$(MSBuildThisFileDirectory)bin\$(Configuration)\netstandard2.0\MTG.Objects.SourceGenerator.Tasks.dll</MtgTasksAssemblyPath>
+    
+    <!-- When using the NuGet package, use the packaged assembly -->
+    <MtgTasksAssemblyPath Condition="'$(MtgTasksAssemblyPath)' == ''">$(MSBuildThisFileDirectory)netstandard2.0\MTG.Objects.SourceGenerator.Tasks.dll</MtgTasksAssemblyPath>
+  </PropertyGroup>
+
+  <!-- Load the MSBuild task from the tasks assembly -->
+  <UsingTask TaskName="MTG.Objects.SourceGenerator.Tasks.DownloadMtgJsonDataTask" 
+             AssemblyFile="$(MtgTasksAssemblyPath)" 
+             Condition="Exists('$(MtgTasksAssemblyPath)')" />
+
+  <Target Name="DownloadMtgJsonDataFiles" BeforeTargets="BeforeCompile" Condition="Exists('$(MtgTasksAssemblyPath)')">
+    <PropertyGroup>
+      <MtgJsonCacheDir>$(IntermediateOutputPath)MTGJsonCache</MtgJsonCacheDir>
+    </PropertyGroup>
+
+    <!-- Create cache directory if it doesn't exist -->
+    <MakeDir Directories="$(MtgJsonCacheDir)" Condition="!Exists('$(MtgJsonCacheDir)')" />
+
+    <!-- Run the download task -->
+    <DownloadMtgJsonDataTask CacheDirectory="$(MtgJsonCacheDir)">
+      <Output TaskParameter="EnumValuesPath" PropertyName="MtgEnumValuesPath" />
+      <Output TaskParameter="SetListPath" PropertyName="MtgSetListPath" />
+    </DownloadMtgJsonDataTask>
+
+    <!-- Add downloaded files as AdditionalFiles for the source generator -->
+    <ItemGroup>
+      <AdditionalFiles Include="$(MtgEnumValuesPath)" Condition="Exists('$(MtgEnumValuesPath)')" />
+      <AdditionalFiles Include="$(MtgSetListPath)" Condition="Exists('$(MtgSetListPath)')" />
+    </ItemGroup>
+  </Target>
+</Project>
