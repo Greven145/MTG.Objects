@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http;
 using Microsoft.Build.Framework;
@@ -31,7 +31,7 @@ public class DownloadMtgJsonDataTask : Task
             if (!Directory.Exists(CacheDirectory))
             {
                 Directory.CreateDirectory(CacheDirectory);
-                Log.LogMessage(MessageImportance.Low, $"Created cache directory: {CacheDirectory}");
+                Log.LogMessage(MessageImportance.High, $"Created cache directory: {CacheDirectory}");
             }
 
             // Download EnumValues.json
@@ -40,7 +40,7 @@ public class DownloadMtgJsonDataTask : Task
             // Download SetList.json
             SetListPath = EnsureDataFileAsync("SetList.json", SetListUrl).GetAwaiter().GetResult();
 
-            Log.LogMessage(MessageImportance.Low, "MTGJson data files are ready");
+            Log.LogMessage(MessageImportance.High, "MTGJson data files are ready");
             return true;
         }
         catch (Exception ex)
@@ -69,15 +69,15 @@ public class DownloadMtgJsonDataTask : Task
             // Validate if the file is still current
             if (await IsFileCurrentAsync(url, storedETag, fileName))
             {
-                Log.LogMessage(MessageImportance.Low, $"{fileName} is up to date (ETag matched)");
+                Log.LogMessage(MessageImportance.High, $"{fileName} is up to date (ETag matched)");
                 return filePath;
             }
         }
 
         // Download the file
-        Log.LogMessage(MessageImportance.Normal, $"Downloading {fileName}...");
+        Log.LogMessage(MessageImportance.High, $"Downloading {fileName}...");
         await DownloadFileAsync(url, filePath, etagPath, fileName);
-        Log.LogMessage(MessageImportance.Normal, $"{fileName} downloaded successfully");
+        Log.LogMessage(MessageImportance.High, $"{fileName} downloaded successfully");
         
         return filePath;
     }
@@ -108,7 +108,7 @@ public class DownloadMtgJsonDataTask : Task
         }
         catch (HttpRequestException ex)
         {
-            Log.LogMessage(MessageImportance.Low, $"ETag validation failed for {fileName}: {ex.Message}");
+            Log.LogMessage(MessageImportance.High, $"ETag validation failed for {fileName}: {ex.Message}");
             
             // If the file exists and network check failed, assume it's current
             var filePath = Path.Combine(CacheDirectory, fileName);
@@ -116,7 +116,7 @@ public class DownloadMtgJsonDataTask : Task
         }
         catch (System.Threading.Tasks.TaskCanceledException)
         {
-            Log.LogMessage(MessageImportance.Low, $"ETag check timed out for {fileName}");
+            Log.LogMessage(MessageImportance.High, $"ETag check timed out for {fileName}");
             
             // If the file exists and check timed out, assume it's current
             var filePath = Path.Combine(CacheDirectory, fileName);
@@ -147,7 +147,7 @@ public class DownloadMtgJsonDataTask : Task
             // If file exists, log warning and continue
             if (File.Exists(filePath))
             {
-                Log.LogMessage(MessageImportance.Normal, $"Download failed for {fileName}, using cached version: {ex.Message}");
+                Log.LogMessage(MessageImportance.High, $"Download failed for {fileName}, using cached version: {ex.Message}");
             }
             else
             {

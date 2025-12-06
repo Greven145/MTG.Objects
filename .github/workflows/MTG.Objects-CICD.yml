@@ -35,7 +35,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build Tasks Project First
-      run: dotnet build src/MTG.Objects.SourceGenerator.Tasks/MTG.Objects.SourceGenerator.Tasks.csproj -c Release
+      run: dotnet build src/MTG.Objects.SourceGenerator.Tasks/MTG.Objects.SourceGenerator.Tasks.csproj -c Release --verbosity detailed
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
