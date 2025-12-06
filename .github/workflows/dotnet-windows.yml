@@ -22,7 +22,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 10.0.x
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
@@ -47,6 +47,8 @@ jobs:
         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
     - name: Restore dependencies
       run: dotnet restore
+    - name: Build Tasks Project First
+      run: dotnet build src/MTG.Objects.SourceGenerator.Tasks/MTG.Objects.SourceGenerator.Tasks.csproj --no-restore
     - name: Build
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

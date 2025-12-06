@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using MTG.Objects.Results;
 using MTG.Objects.ValueObjects;
 
@@ -14,7 +13,6 @@ public record Deck(string Name)
     public SubDeck Main { get; } = new();
     public SubDeck Sideboard { get; } = new();
 
-    [UsedImplicitly]
     public static DeckParseResult Parse(string[] strings, string deckName)
     {
         var deck = new Deck(deckName);

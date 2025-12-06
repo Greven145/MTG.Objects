@@ -24,9 +24,11 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 10.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Build Tasks Project First
+      run: dotnet build src/MTG.Objects.SourceGenerator.Tasks/MTG.Objects.SourceGenerator.Tasks.csproj --no-restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
