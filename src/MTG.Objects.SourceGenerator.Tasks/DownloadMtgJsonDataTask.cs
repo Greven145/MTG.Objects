@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Http;
+using System.Runtime.InteropServices.ComTypes;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Polly;
@@ -48,7 +49,8 @@ public class DownloadMtgJsonDataTask : Task
         {
             Log.LogWarning($"Failed to download MTGJson data files: {ex.Message}");
 
-            if (File.Exists(filePath))
+            if (File.Exists(Path.Combine(CacheDirectory, "EnumValues.json")) &&
+                File.Exists(Path.Combine(CacheDirectory, "SetList.json")))
             {
                 // Set paths to cached files even if download failed
                 EnumValuesPath = Path.Combine(CacheDirectory, "EnumValues.json");
@@ -64,8 +66,8 @@ public class DownloadMtgJsonDataTask : Task
 
     private async System.Threading.Tasks.Task<string> EnsureDataFileAsync(string fileName, string url)
     {
-        var filePath = Path.Combine(CacheDirectory, fileName);
-        var etagPath = Path.Combine(CacheDirectory, $"{fileName}.etag");
+        string filePath = Path.Combine(CacheDirectory, fileName);
+        string etagPath = Path.Combine(CacheDirectory, $"{fileName}.etag");
 
         // Check if file exists and has a stored ETag
         if (File.Exists(filePath) && File.Exists(etagPath))
