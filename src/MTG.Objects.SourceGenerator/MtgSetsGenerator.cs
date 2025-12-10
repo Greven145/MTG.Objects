@@ -43,7 +43,8 @@ public class MtgSetsGenerator : IIncrementalGenerator
             {
                 var content = file.GetText(ct)!.ToString();
                 return (file.Path, Content: content);
-            });
+            })
+            .Collect();
 
         // Find classes with the GenerateSets attribute
         var classesWithAttribute = context.SyntaxProvider
@@ -58,10 +59,20 @@ public class MtgSetsGenerator : IIncrementalGenerator
 
         context.RegisterSourceOutput(combined, static (spc, source) =>
         {
-            var (jsonData, attributes) = source;
+            var (jsonFiles, attributes) = source;
             
             spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
                 "MtgSetsGenerator: Initialized and RegisterSourceOutput called"));
+            
+            // Fail the build if SetList.json doesn't exist
+            if (jsonFiles.Length == 0)
+            {
+                spc.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+                    "SetList.json file not found. Ensure the file exists and is marked as AdditionalFiles in the project."));
+                return;
+            }
+            
+            var jsonData = jsonFiles[0];
             
             spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
                 $"MtgSetsGenerator: JSON path: {jsonData.Path ?? "null"}"));
@@ -71,8 +82,8 @@ public class MtgSetsGenerator : IIncrementalGenerator
             
             if (string.IsNullOrEmpty(jsonData.Content))
             {
-                spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                    "MtgSetsGenerator: JSON content is null or empty"));
+                spc.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+                    "SetList.json file is empty. The file must contain valid JSON data."));
                 return;
             }
 

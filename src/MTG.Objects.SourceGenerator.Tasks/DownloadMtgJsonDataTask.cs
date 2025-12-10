@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using Polly;
 
 namespace MTG.Objects.SourceGenerator.Tasks;
 
@@ -46,13 +47,18 @@ public class DownloadMtgJsonDataTask : Task
         catch (Exception ex)
         {
             Log.LogWarning($"Failed to download MTGJson data files: {ex.Message}");
-            
-            // Set paths to cached files even if download failed
-            EnumValuesPath = Path.Combine(CacheDirectory, "EnumValues.json");
-            SetListPath = Path.Combine(CacheDirectory, "SetList.json");
-            
-            // Don't fail the build if download fails
-            return true;
+
+            if (File.Exists(filePath))
+            {
+                // Set paths to cached files even if download failed
+                EnumValuesPath = Path.Combine(CacheDirectory, "EnumValues.json");
+                SetListPath = Path.Combine(CacheDirectory, "SetList.json");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
@@ -128,19 +134,34 @@ public class DownloadMtgJsonDataTask : Task
     {
         try
         {
-            using var httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
-            var response = await httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
+            var retryPolicy = Policy
+                .Handle<HttpRequestException>()
+                .Or<System.Threading.Tasks.TaskCanceledException>()
+                .WaitAndRetryAsync(
+                    retryCount: 3,
+                    sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                    onRetry: (exception, timeSpan, retryCount, context) =>
+                    {
+                        Log.LogMessage(MessageImportance.High, 
+                            $"Retry {retryCount} for {fileName} after {timeSpan.TotalSeconds}s delay. Error: {exception.Message}");
+                    });
 
-            // Save the file content
-            var content = await response.Content.ReadAsStringAsync();
-            File.WriteAllText(filePath, content);
-
-            // Save the ETag if present
-            if (response.Headers.ETag != null)
+            await retryPolicy.ExecuteAsync(async () =>
             {
-                File.WriteAllText(etagPath, response.Headers.ETag.Tag);
-            }
+                using var httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
+                var response = await httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                // Save the file content
+                var content = await response.Content.ReadAsStringAsync();
+                File.WriteAllText(filePath, content);
+
+                // Save the ETag if present
+                if (response.Headers.ETag != null)
+                {
+                    File.WriteAllText(etagPath, response.Headers.ETag.Tag);
+                }
+            });
         }
         catch (Exception ex)
         {
@@ -151,7 +172,8 @@ public class DownloadMtgJsonDataTask : Task
             }
             else
             {
-                throw new Exception($"Failed to download {fileName} and no cached version exists", ex);
+                Log.LogError($"Failed to download {fileName} and no cached version exists: {ex.Message}");
+                throw;
             }
         }
     }

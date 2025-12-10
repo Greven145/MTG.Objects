@@ -24,6 +24,8 @@ charset = utf-8-bom
 # .NET Coding Conventions     #
 ###############################
 [*.{cs,vb}]
+# Suppress RS2008 for this project
+dotnet_diagnostic.RS2008.severity = none
 # Organize usings
 dotnet_sort_system_directives_first = true
 # this. preferences
