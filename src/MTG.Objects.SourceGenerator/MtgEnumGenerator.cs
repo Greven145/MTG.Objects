@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -11,6 +11,23 @@ namespace MTG.Objects.SourceGenerator;
 [Generator]
 public class MtgEnumGenerator : IIncrementalGenerator
 {
+    // Diagnostic descriptors for debugging
+    private static readonly DiagnosticDescriptor DebugInfo = new(
+        "MTGGEN001",
+        "Source Generator Debug Info",
+        "{0}",
+        "MTG.Objects.SourceGenerator",
+        DiagnosticSeverity.Info,
+        true);
+
+    private static readonly DiagnosticDescriptor ErrorDiagnostic = new(
+        "MTGGEN002",
+        "Source Generator Error",
+        "{0}",
+        "MTG.Objects.SourceGenerator",
+        DiagnosticSeverity.Error,
+        true);
+
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         // Register the marker attribute
@@ -22,7 +39,11 @@ public class MtgEnumGenerator : IIncrementalGenerator
         // Find all additional files that match EnumValues.json
         var enumJsonFiles = context.AdditionalTextsProvider
             .Where(static file => file.Path.EndsWith("EnumValues.json"))
-            .Select(static (file, ct) => file.GetText(ct)!.ToString());
+            .Select(static (file, ct) =>
+            {
+                var content = file.GetText(ct)!.ToString();
+                return (file.Path, Content: content);
+            });
 
         // Find classes with the GenerateEnums attribute
         var classesWithAttribute = context.SyntaxProvider
@@ -37,12 +58,28 @@ public class MtgEnumGenerator : IIncrementalGenerator
 
         context.RegisterSourceOutput(combined, static (spc, source) =>
         {
-            var (jsonContent, _) = source;
+            var (jsonData, attributes) = source;
             
-            if (string.IsNullOrEmpty(jsonContent))
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                "MtgEnumGenerator: Initialized and RegisterSourceOutput called"));
+            
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgEnumGenerator: JSON path: {jsonData.Path ?? "null"}"));
+            
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgEnumGenerator: Attributes found: {attributes.Length}"));
+            
+            if (string.IsNullOrEmpty(jsonData.Content))
+            {
+                spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                    "MtgEnumGenerator: JSON content is null or empty"));
                 return;
+            }
 
-            GenerateEnums(spc, jsonContent);
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgEnumGenerator: JSON content length: {jsonData.Content.Length} characters"));
+
+            GenerateEnums(spc, jsonData.Content);
         });
     }
 
@@ -50,23 +87,42 @@ public class MtgEnumGenerator : IIncrementalGenerator
     {
         try
         {
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                "MtgEnumGenerator: Starting JSON parsing"));
+
             using var document = JsonDocument.Parse(jsonContent);
             var root = document.RootElement;
 
+            var categoryCount = 0;
+            var enumCount = 0;
+
             foreach (var category in root.EnumerateObject())
             {
+                categoryCount++;
                 var categoryName = category.Name.Pascalize();
+                
+                context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                    $"MtgEnumGenerator: Processing category '{category.Name}' (pascalized: '{categoryName}')"));
                 
                 foreach (var enumType in category.Value.EnumerateObject())
                 {
                     var typeName = enumType.Name.Pascalize();
                     
+                    context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                        $"MtgEnumGenerator: Processing enum type '{enumType.Name}' in category '{categoryName}' (pascalized: '{typeName}')"));
+                    
                     // Skip if the value is not an array
                     if (enumType.Value.ValueKind != JsonValueKind.Array)
                     {
+                        context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                            $"MtgEnumGenerator: '{typeName}' is not an array (ValueKind: {enumType.Value.ValueKind})"));
+                        
                         // Check if it's an object with nested arrays
                         if (enumType.Value.ValueKind == JsonValueKind.Object)
                         {
+                            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                                $"MtgEnumGenerator: '{typeName}' is an object, checking for nested enums"));
+                            
                             foreach (var nestedEnum in enumType.Value.EnumerateObject())
                             {
                                 if (nestedEnum.Value.ValueKind != JsonValueKind.Array) continue;
@@ -77,6 +133,11 @@ public class MtgEnumGenerator : IIncrementalGenerator
                                     .ToList();
 
                                 if (!nestedValues.Any()) continue;
+                                
+                                enumCount++;
+                                context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                                    $"MtgEnumGenerator: Generating nested enum '{categoryName}.{typeName}.{nestedTypeName}' with {nestedValues.Count} values"));
+                                
                                 var nestedSource = GenerateEnumClass($"{categoryName}.{typeName}", nestedTypeName, nestedValues);
                                 context.AddSource($"{categoryName}.{typeName}.{nestedTypeName}.g.cs", SourceText.From(nestedSource, Encoding.UTF8));
                             }
@@ -89,37 +150,42 @@ public class MtgEnumGenerator : IIncrementalGenerator
                         .Where(v => !string.IsNullOrEmpty(v))
                         .ToList();
 
-                    if (!values.Any()) continue;
+                    if (!values.Any())
+                    {
+                        context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                            $"MtgEnumGenerator: '{typeName}' has no values, skipping"));
+                        continue;
+                    }
+                    
+                    enumCount++;
+                    context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                        $"MtgEnumGenerator: Generating enum '{categoryName}.{typeName}' with {values.Count} values"));
+                    
                     var source = GenerateEnumClass(categoryName, typeName, values);
                     context.AddSource($"{categoryName}.{typeName}.g.cs", SourceText.From(source, Encoding.UTF8));
                 }
             }
+
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgEnumGenerator: Completed. Processed {categoryCount} categories and generated {enumCount} enums"));
         }
         catch (JsonException ex)
         {
             // If JSON parsing fails, report a diagnostic
-            context.ReportDiagnostic(Diagnostic.Create(
-                new DiagnosticDescriptor(
-                    "MTG001",
-                    "Invalid JSON",
-                    $"Failed to parse EnumValues.json file: {ex.Message}",
-                    "MTG.Objects.SourceGenerator",
-                    DiagnosticSeverity.Error,
-                    true),
-                Location.None));
+            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+                $"Failed to parse EnumValues.json: {ex.Message}"));
+            
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgEnumGenerator: JsonException stack trace: {ex.StackTrace}"));
         }
         catch (System.Exception ex)
         {
             // Catch any other exceptions
-            context.ReportDiagnostic(Diagnostic.Create(
-                new DiagnosticDescriptor(
-                    "MTG001",
-                    "Generation Error",
-                    $"Failed to generate enums: {ex.Message}",
-                    "MTG.Objects.SourceGenerator",
-                    DiagnosticSeverity.Error,
-                    true),
-                Location.None));
+            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+                $"Failed to generate enums: {ex.GetType().Name}: {ex.Message}"));
+            
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgEnumGenerator: Exception stack trace: {ex.StackTrace}"));
         }
     }
 

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -11,6 +11,23 @@ namespace MTG.Objects.SourceGenerator;
 [Generator]
 public class MtgSetsGenerator : IIncrementalGenerator
 {
+    // Diagnostic descriptors for debugging
+    private static readonly DiagnosticDescriptor DebugInfo = new(
+        "MTGSETS001",
+        "Sets Generator Debug Info",
+        "{0}",
+        "MTG.Objects.SourceGenerator",
+        DiagnosticSeverity.Info,
+        true);
+
+    private static readonly DiagnosticDescriptor ErrorDiagnostic = new(
+        "MTGSETS002",
+        "Sets Generator Error",
+        "{0}",
+        "MTG.Objects.SourceGenerator",
+        DiagnosticSeverity.Error,
+        true);
+
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         // Register the marker attribute so it's available to the consuming project
@@ -22,7 +39,11 @@ public class MtgSetsGenerator : IIncrementalGenerator
         // Find all additional files that match SetList.json
         var setJsonFiles = context.AdditionalTextsProvider
             .Where(static file => file.Path.EndsWith("SetList.json"))
-            .Select(static (file, ct) => file.GetText(ct)!.ToString());
+            .Select(static (file, ct) =>
+            {
+                var content = file.GetText(ct)!.ToString();
+                return (file.Path, Content: content);
+            });
 
         // Find classes with the GenerateSets attribute
         var classesWithAttribute = context.SyntaxProvider
@@ -37,12 +58,28 @@ public class MtgSetsGenerator : IIncrementalGenerator
 
         context.RegisterSourceOutput(combined, static (spc, source) =>
         {
-            var (jsonContent, _) = source;
+            var (jsonData, attributes) = source;
             
-            if (string.IsNullOrEmpty(jsonContent))
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                "MtgSetsGenerator: Initialized and RegisterSourceOutput called"));
+            
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: JSON path: {jsonData.Path ?? "null"}"));
+            
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: Attributes found: {attributes.Length}"));
+            
+            if (string.IsNullOrEmpty(jsonData.Content))
+            {
+                spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                    "MtgSetsGenerator: JSON content is null or empty"));
                 return;
+            }
 
-            GenerateSets(spc, jsonContent);
+            spc.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: JSON content length: {jsonData.Content.Length} characters"));
+
+            GenerateSets(spc, jsonData.Content);
         });
     }
 
@@ -50,11 +87,21 @@ public class MtgSetsGenerator : IIncrementalGenerator
     {
         try
         {
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                "MtgSetsGenerator: Starting JSON parsing"));
+
             using var document = JsonDocument.Parse(jsonContent);
             var root = document.RootElement;
 
             if (!root.TryGetProperty("data", out var dataArray))
+            {
+                context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                    "MtgSetsGenerator: 'data' property not found in JSON root"));
                 return;
+            }
+
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: 'data' array found with ValueKind: {dataArray.ValueKind}"));
 
             var sets = new List<(string Code, string Name)>();
 
@@ -63,30 +110,49 @@ public class MtgSetsGenerator : IIncrementalGenerator
                 if (item.TryGetProperty("code", out var code) &&
                     item.TryGetProperty("name", out var name))
                 {
-                    sets.Add((code.GetString() ?? string.Empty, name.GetString() ?? string.Empty));
+                    var codeValue = code.GetString() ?? string.Empty;
+                    var nameValue = name.GetString() ?? string.Empty;
+                    sets.Add((codeValue, nameValue));
                 }
             }
 
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: Parsed {sets.Count} sets from JSON"));
+
             // Generate SetInfo record
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                "MtgSetsGenerator: Generating SetInfo.g.cs"));
+            
             var setInfoSource = GenerateSetInfoRecord();
             context.AddSource("SetInfo.g.cs", SourceText.From(setInfoSource, Encoding.UTF8));
 
             // Generate Sets static class
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: Generating Sets.g.cs with {sets.Count} set properties"));
+            
             var setsSource = GenerateSetsClass(sets);
             context.AddSource("Sets.g.cs", SourceText.From(setsSource, Encoding.UTF8));
+
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                "MtgSetsGenerator: Completed successfully"));
         }
-        catch (JsonException)
+        catch (JsonException ex)
         {
             // If JSON parsing fails, report a diagnostic
-            context.ReportDiagnostic(Diagnostic.Create(
-                new DiagnosticDescriptor(
-                    "MTG002",
-                    "Invalid JSON",
-                    "Failed to parse SetList.json file",
-                    "MTG.Objects.SourceGenerator",
-                    DiagnosticSeverity.Error,
-                    true),
-                Location.None));
+            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+                $"Failed to parse SetList.json: {ex.Message}"));
+            
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: JsonException stack trace: {ex.StackTrace}"));
+        }
+        catch (System.Exception ex)
+        {
+            // Catch any other exceptions
+            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+                $"Failed to generate sets: {ex.GetType().Name}: {ex.Message}"));
+            
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+                $"MtgSetsGenerator: Exception stack trace: {ex.StackTrace}"));
         }
     }
 
