@@ -39,9 +39,9 @@ jobs:
     - name: Build Tasks Project First
       run: dotnet build src/MTG.Objects.SourceGenerator.Tasks/MTG.Objects.SourceGenerator.Tasks.csproj -c Release
     - name: Build
-      run: dotnet build -c Release --no-restore  /v:diagnostic
+      run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test --no-restore
+      run: dotnet test -c Release --no-build --no-restore
     - name: Publish
       run: dotnet publish src/MTG.Objects/MTG.Objects.csproj -c Release -o publish/source
     - name: Create nupkg
