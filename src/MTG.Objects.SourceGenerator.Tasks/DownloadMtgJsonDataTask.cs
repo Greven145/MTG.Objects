@@ -59,6 +59,7 @@ public class DownloadMtgJsonDataTask : Task
             }
             else
             {
+                Log.LogError("Failed to download MTGJson data files and no cached versions exist.");
                 return false;
             }
         }

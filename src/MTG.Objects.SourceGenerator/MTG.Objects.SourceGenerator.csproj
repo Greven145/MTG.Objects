@@ -26,7 +26,4 @@
     </ItemGroup>
   </Target>
 
-  <!-- Import the targets file that downloads MTGJson data files -->
-  <Import Project="..\MTG.Objects.SourceGenerator.Tasks\MTG.Objects.SourceGenerator.Tasks.targets" />
-
 </Project>
