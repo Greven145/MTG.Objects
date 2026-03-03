@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using Polly;
 
 namespace MTG.Objects.SourceGenerator.Tasks;
 
@@ -15,6 +14,7 @@ public class DownloadMtgJsonDataTask : Task
 {
     private const string EnumValuesUrl = "https://mtgjson.com/api/v5/EnumValues.json";
     private const string SetListUrl = "https://mtgjson.com/api/v5/SetList.json";
+    private const int MaxRetries = 3;
 
     [Required]
     public string CacheDirectory { get; set; } = string.Empty;
@@ -38,7 +38,7 @@ public class DownloadMtgJsonDataTask : Task
 
             // Download EnumValues.json
             EnumValuesPath = EnsureDataFileAsync("EnumValues.json", EnumValuesUrl).GetAwaiter().GetResult();
-            
+
             // Download SetList.json
             SetListPath = EnsureDataFileAsync("SetList.json", SetListUrl).GetAwaiter().GetResult();
 
@@ -74,7 +74,7 @@ public class DownloadMtgJsonDataTask : Task
         if (File.Exists(filePath) && File.Exists(etagPath))
         {
             var storedETag = File.ReadAllText(etagPath).Trim();
-            
+
             // Validate if the file is still current
             if (await IsFileCurrentAsync(url, storedETag, fileName))
             {
@@ -87,7 +87,7 @@ public class DownloadMtgJsonDataTask : Task
         Log.LogMessage(MessageImportance.High, $"Downloading {fileName}...");
         await DownloadFileAsync(url, filePath, etagPath, fileName);
         Log.LogMessage(MessageImportance.High, $"{fileName} downloaded successfully");
-        
+
         return filePath;
     }
 
@@ -118,7 +118,7 @@ public class DownloadMtgJsonDataTask : Task
         catch (HttpRequestException ex)
         {
             Log.LogMessage(MessageImportance.High, $"ETag validation failed for {fileName}: {ex.Message}");
-            
+
             // If the file exists and network check failed, assume it's current
             var filePath = Path.Combine(CacheDirectory, fileName);
             return File.Exists(filePath);
@@ -126,7 +126,7 @@ public class DownloadMtgJsonDataTask : Task
         catch (System.Threading.Tasks.TaskCanceledException)
         {
             Log.LogMessage(MessageImportance.High, $"ETag check timed out for {fileName}");
-            
+
             // If the file exists and check timed out, assume it's current
             var filePath = Path.Combine(CacheDirectory, fileName);
             return File.Exists(filePath);
@@ -137,19 +137,7 @@ public class DownloadMtgJsonDataTask : Task
     {
         try
         {
-            var retryPolicy = Policy
-                .Handle<HttpRequestException>()
-                .Or<System.Threading.Tasks.TaskCanceledException>()
-                .WaitAndRetryAsync(
-                    retryCount: 3,
-                    sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
-                    onRetry: (exception, timeSpan, retryCount, context) =>
-                    {
-                        Log.LogMessage(MessageImportance.High, 
-                            $"Retry {retryCount} for {fileName} after {timeSpan.TotalSeconds}s delay. Error: {exception.Message}");
-                    });
-
-            await retryPolicy.ExecuteAsync(async () =>
+            await ExecuteWithRetryAsync(async () =>
             {
                 using var httpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
                 var response = await httpClient.GetAsync(url);
@@ -164,7 +152,7 @@ public class DownloadMtgJsonDataTask : Task
                 {
                     File.WriteAllText(etagPath, response.Headers.ETag.Tag);
                 }
-            });
+            }, fileName);
         }
         catch (Exception ex)
         {
@@ -177,6 +165,25 @@ public class DownloadMtgJsonDataTask : Task
             {
                 Log.LogError($"Failed to download {fileName} and no cached version exists: {ex.Message}");
                 throw;
+            }
+        }
+    }
+
+    private async System.Threading.Tasks.Task ExecuteWithRetryAsync(Func<System.Threading.Tasks.Task> action, string fileName)
+    {
+        for (int attempt = 1; attempt <= MaxRetries; attempt++)
+        {
+            try
+            {
+                await action();
+                return;
+            }
+            catch (Exception ex) when (attempt < MaxRetries && (ex is HttpRequestException || ex is System.Threading.Tasks.TaskCanceledException))
+            {
+                var delay = TimeSpan.FromSeconds(Math.Pow(2, attempt));
+                Log.LogMessage(MessageImportance.High,
+                    $"Retry {attempt} for {fileName} after {delay.TotalSeconds}s delay. Error: {ex.Message}");
+                Thread.Sleep(delay);
             }
         }
     }
