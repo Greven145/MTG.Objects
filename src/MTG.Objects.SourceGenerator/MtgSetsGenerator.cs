@@ -147,23 +147,9 @@ public class MtgSetsGenerator : IIncrementalGenerator
             context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
                 "MtgSetsGenerator: Completed successfully"));
         }
-        catch (JsonException ex)
-        {
-            // If JSON parsing fails, report a diagnostic
-            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
-                $"Failed to parse SetList.json: {ex.Message}"));
-            
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                $"MtgSetsGenerator: JsonException stack trace: {ex.StackTrace}"));
-        }
         catch (System.Exception ex)
         {
-            // Catch any other exceptions
-            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
-                $"Failed to generate sets: {ex.GetType().Name}: {ex.Message}"));
-            
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                $"MtgSetsGenerator: Exception stack trace: {ex.StackTrace}"));
+            DiagnosticHelper.ReportGeneratorException(context, ex, ErrorDiagnostic, DebugInfo, "MtgSetsGenerator", "SetList.json");
         }
     }
 

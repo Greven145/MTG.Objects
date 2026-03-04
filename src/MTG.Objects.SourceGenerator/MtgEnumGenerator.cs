@@ -110,19 +110,9 @@ public class MtgEnumGenerator : IIncrementalGenerator
             context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
                 $"MtgEnumGenerator: Completed. Processed {categoryCount} categories and generated {enumCount} enums"));
         }
-        catch (JsonException ex)
-        {
-            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None,
-                $"Failed to parse EnumValues.json: {ex.Message}"));
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
-                $"MtgEnumGenerator: JsonException stack trace: {ex.StackTrace}"));
-        }
         catch (System.Exception ex)
         {
-            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None,
-                $"Failed to generate enums: {ex.GetType().Name}: {ex.Message}"));
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
-                $"MtgEnumGenerator: Exception stack trace: {ex.StackTrace}"));
+            DiagnosticHelper.ReportGeneratorException(context, ex, ErrorDiagnostic, DebugInfo, "MtgEnumGenerator", "EnumValues.json");
         }
     }
 
