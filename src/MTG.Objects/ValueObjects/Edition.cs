@@ -7,8 +7,8 @@ public class Edition : ValueObject {
     private readonly string _name;
 
     private Edition(string name, string code) {
-        _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-        _code = Guard.Against.NullOrWhiteSpace(code, nameof(code));
+        _name = Guard.Against.NullOrWhiteSpace(name);
+        _code = Guard.Against.NullOrWhiteSpace(code);
     }
 
     public override string ToString() => this;

@@ -8,7 +8,7 @@ public class NumberOfCards : ValueObject
 
     public NumberOfCards(int numberOfCards)
     {
-        _number = Guard.Against.Negative(numberOfCards, nameof(numberOfCards));
+        _number = Guard.Against.Negative(numberOfCards);
     }
 
     public static implicit operator int(NumberOfCards card)

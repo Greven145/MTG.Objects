@@ -87,7 +87,7 @@ public class MtgEnumGenerator : IIncrementalGenerator
     {
         try
         {
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
                 "MtgEnumGenerator: Starting JSON parsing"));
 
             using var document = JsonDocument.Parse(jsonContent);
@@ -100,93 +100,94 @@ public class MtgEnumGenerator : IIncrementalGenerator
             {
                 categoryCount++;
                 var categoryName = category.Name.Pascalize();
-                
-                context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+
+                context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
                     $"MtgEnumGenerator: Processing category '{category.Name}' (pascalized: '{categoryName}')"));
-                
-                foreach (var enumType in category.Value.EnumerateObject())
-                {
-                    var typeName = enumType.Name.Pascalize();
-                    
-                    context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                        $"MtgEnumGenerator: Processing enum type '{enumType.Name}' in category '{categoryName}' (pascalized: '{typeName}')"));
-                    
-                    // Skip if the value is not an array
-                    if (enumType.Value.ValueKind != JsonValueKind.Array)
-                    {
-                        context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                            $"MtgEnumGenerator: '{typeName}' is not an array (ValueKind: {enumType.Value.ValueKind})"));
-                        
-                        // Check if it's an object with nested arrays
-                        if (enumType.Value.ValueKind == JsonValueKind.Object)
-                        {
-                            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                                $"MtgEnumGenerator: '{typeName}' is an object, checking for nested enums"));
-                            
-                            foreach (var nestedEnum in enumType.Value.EnumerateObject())
-                            {
-                                if (nestedEnum.Value.ValueKind != JsonValueKind.Array) continue;
-                                var nestedTypeName = nestedEnum.Name.Pascalize();
-                                var nestedValues = nestedEnum.Value.EnumerateArray()
-                                    .Select(v => v.GetString() ?? string.Empty)
-                                    .Where(v => !string.IsNullOrEmpty(v))
-                                    .ToList();
 
-                                if (!nestedValues.Any()) continue;
-                                
-                                enumCount++;
-                                context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                                    $"MtgEnumGenerator: Generating nested enum '{categoryName}.{typeName}.{nestedTypeName}' with {nestedValues.Count} values"));
-                                
-                                var nestedSource = GenerateEnumClass($"{categoryName}.{typeName}", nestedTypeName, nestedValues);
-                                context.AddSource($"{categoryName}.{typeName}.{nestedTypeName}.g.cs", SourceText.From(nestedSource, Encoding.UTF8));
-                            }
-                        }
-                        continue;
-                    }
-                    
-                    var values = enumType.Value.EnumerateArray()
-                        .Select(v => v.GetString() ?? string.Empty)
-                        .Where(v => !string.IsNullOrEmpty(v))
-                        .ToList();
-
-                    if (!values.Any())
-                    {
-                        context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                            $"MtgEnumGenerator: '{typeName}' has no values, skipping"));
-                        continue;
-                    }
-                    
-                    enumCount++;
-                    context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
-                        $"MtgEnumGenerator: Generating enum '{categoryName}.{typeName}' with {values.Count} values"));
-                    
-                    var source = GenerateEnumClass(categoryName, typeName, values);
-                    context.AddSource($"{categoryName}.{typeName}.g.cs", SourceText.From(source, Encoding.UTF8));
-                }
+                enumCount += ProcessCategory(context, category.Value, categoryName);
             }
 
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
                 $"MtgEnumGenerator: Completed. Processed {categoryCount} categories and generated {enumCount} enums"));
         }
         catch (JsonException ex)
         {
-            // If JSON parsing fails, report a diagnostic
-            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None,
                 $"Failed to parse EnumValues.json: {ex.Message}"));
-            
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
                 $"MtgEnumGenerator: JsonException stack trace: {ex.StackTrace}"));
         }
         catch (System.Exception ex)
         {
-            // Catch any other exceptions
-            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None, 
+            context.ReportDiagnostic(Diagnostic.Create(ErrorDiagnostic, Location.None,
                 $"Failed to generate enums: {ex.GetType().Name}: {ex.Message}"));
-            
-            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None, 
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
                 $"MtgEnumGenerator: Exception stack trace: {ex.StackTrace}"));
         }
+    }
+
+    private static int ProcessCategory(SourceProductionContext context, JsonElement categoryValue, string categoryName)
+    {
+        var enumCount = 0;
+
+        foreach (var enumType in categoryValue.EnumerateObject())
+        {
+            var typeName = enumType.Name.Pascalize();
+
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
+                $"MtgEnumGenerator: Processing enum type '{enumType.Name}' in category '{categoryName}' (pascalized: '{typeName}')"));
+
+            if (enumType.Value.ValueKind == JsonValueKind.Array)
+            {
+                enumCount += EmitEnumFromArray(context, categoryName, typeName, enumType.Value);
+            }
+            else if (enumType.Value.ValueKind == JsonValueKind.Object)
+            {
+                enumCount += ProcessNestedEnums(context, categoryName, typeName, enumType.Value);
+            }
+        }
+
+        return enumCount;
+    }
+
+    private static int EmitEnumFromArray(SourceProductionContext context, string categoryName, string typeName, JsonElement array)
+    {
+        var values = array.EnumerateArray()
+            .Select(v => v.GetString() ?? string.Empty)
+            .Where(v => !string.IsNullOrEmpty(v))
+            .ToList();
+
+        if (!values.Any())
+        {
+            context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
+                $"MtgEnumGenerator: '{typeName}' has no values, skipping"));
+            return 0;
+        }
+
+        context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
+            $"MtgEnumGenerator: Generating enum '{categoryName}.{typeName}' with {values.Count} values"));
+
+        var source = GenerateEnumClass(categoryName, typeName, values);
+        context.AddSource($"{categoryName}.{typeName}.g.cs", SourceText.From(source, Encoding.UTF8));
+        return 1;
+    }
+
+    private static int ProcessNestedEnums(SourceProductionContext context, string categoryName, string typeName, JsonElement obj)
+    {
+        context.ReportDiagnostic(Diagnostic.Create(DebugInfo, Location.None,
+            $"MtgEnumGenerator: '{typeName}' is an object, checking for nested enums"));
+
+        var enumCount = 0;
+        var nestedCategoryName = $"{categoryName}.{typeName}";
+
+        foreach (var nestedEnum in obj.EnumerateObject())
+        {
+            if (nestedEnum.Value.ValueKind != JsonValueKind.Array) continue;
+
+            enumCount += EmitEnumFromArray(context, nestedCategoryName, nestedEnum.Name.Pascalize(), nestedEnum.Value);
+        }
+
+        return enumCount;
     }
 
     private static string GenerateEnumClass(string categoryName, string typeName, List<string> values)
