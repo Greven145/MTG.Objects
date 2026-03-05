@@ -236,7 +236,7 @@ public class MtgEnumGenerator : IIncrementalGenerator
             .Replace("D And D", "DnD");  // Special case for D&D
 
         // Remove any remaining non-word characters
-        elementName = System.Text.RegularExpressions.Regex.Replace(elementName, @"[^\w]", "");
+        elementName = System.Text.RegularExpressions.Regex.Replace(elementName, @"[^\w]", "", System.Text.RegularExpressions.RegexOptions.None, System.TimeSpan.FromSeconds(1));
 
         // Special case for FrameVersions (note: className after pascalization)
         if ((className.Equals("FrameVersions", System.StringComparison.OrdinalIgnoreCase) || 

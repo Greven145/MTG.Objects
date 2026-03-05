@@ -299,7 +299,7 @@ public class MtgSetsGenerator : IIncrementalGenerator
         }
 
         // Remove any remaining invalid characters
-        propertyName = System.Text.RegularExpressions.Regex.Replace(propertyName, @"[^\w]", "");
+        propertyName = System.Text.RegularExpressions.Regex.Replace(propertyName, @"[^\w]", "", System.Text.RegularExpressions.RegexOptions.None, System.TimeSpan.FromSeconds(1));
 
         return propertyName;
     }
