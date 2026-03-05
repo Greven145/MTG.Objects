@@ -3,18 +3,12 @@
 namespace MTG.Objects.ValueObjects;
 
 public class Edition : ValueObject {
-    private static readonly Dictionary<string, string> CodeToName = Sets.SetList;
-
-    private static readonly Dictionary<string, string> NameToCode =
-        new(CodeToName.Select(kv => new KeyValuePair<string, string>(kv.Value, kv.Key)));
-
     private readonly string _code;
-
     private readonly string _name;
 
     private Edition(string name, string code) {
-        _name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
-        _code = Guard.Against.NullOrWhiteSpace(code, nameof(code));
+        _name = Guard.Against.NullOrWhiteSpace(name);
+        _code = Guard.Against.NullOrWhiteSpace(code);
     }
 
     public override string ToString() => this;
@@ -46,12 +40,14 @@ public class Edition : ValueObject {
     private static (bool successful, Edition? edition) ParsePartialSetIdentifier(ReadOnlySpan<char> trimmed) {
         var nameOrCode = trimmed.ToString();
 
-        if (CodeToName.TryGetValue(nameOrCode, out var name)) {
-            return (true, new Edition(name, nameOrCode));
+        // Try to find by code first
+        if (Sets.TryGetByCode(nameOrCode, out var setByCode) && setByCode is not null) {
+            return (true, new Edition(setByCode.Name, setByCode.Code));
         }
 
-        if (NameToCode.TryGetValue(nameOrCode, out var code)) {
-            return (true, new Edition(nameOrCode, code));
+        // Try to find by name
+        if (Sets.TryGetByName(nameOrCode, out var setByName) && setByName is not null) {
+            return (true, new Edition(setByName.Name, setByName.Code));
         }
 
         return (false, null);
@@ -63,9 +59,11 @@ public class Edition : ValueObject {
         var code = trimmed[(openingParenthesisIndex + 1)..closingParenthesisIndex].Trim();
 
         var codeAsString = code.ToString();
+        var nameAsString = name.ToString();
 
-        if (CodeToName.TryGetValue(codeAsString, out var dictName) && dictName == name.ToString()) {
-            return (true, new Edition(name.ToString(), codeAsString));
+        // Validate that the code exists and matches the name
+        if (Sets.TryGetByCode(codeAsString, out var set) && set is not null && set.Name == nameAsString) {
+            return (true, new Edition(nameAsString, codeAsString));
         }
 
         return (false, null);

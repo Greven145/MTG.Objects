@@ -20,13 +20,17 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
     - name: Setup .NET
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+          6.0.x
+          10.0.x
     - name: Restore dependencies
       run: dotnet restore
+    - name: Build Tasks Project First
+      run: dotnet build src/MTG.Objects.SourceGenerator.Tasks/MTG.Objects.SourceGenerator.Tasks.csproj --no-restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test

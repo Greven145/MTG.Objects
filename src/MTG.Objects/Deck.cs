@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 using MTG.Objects.Results;
 using MTG.Objects.ValueObjects;
 
@@ -10,11 +9,10 @@ namespace MTG.Objects;
 public record Deck(string Name)
 {
     private const string TxtDeckPattern = @"^(\d+)\s(.*)$";
-    private static readonly Regex TextDeckRegex = new(TxtDeckPattern);
+    private static readonly Regex TextDeckRegex = new(TxtDeckPattern, RegexOptions.None, TimeSpan.FromSeconds(1));
     public SubDeck Main { get; } = new();
     public SubDeck Sideboard { get; } = new();
 
-    [UsedImplicitly]
     public static DeckParseResult Parse(string[] strings, string deckName)
     {
         var deck = new Deck(deckName);

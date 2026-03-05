@@ -5,5 +5,4 @@ using JetBrains.Annotations;
 namespace System.Runtime.CompilerServices;
 
 [EditorBrowsable(EditorBrowsableState.Never)]
-[UsedImplicitly]
 public record IsExternalInit;

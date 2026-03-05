@@ -19,7 +19,9 @@ on:
       - '**/src/MTG.Objects/**'
 
 env:
-  dotnet-version:  '6.0.x'
+  dotnet-version: |
+    6.0.x
+    10.0.x
 
 jobs:
   build:
@@ -27,30 +29,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: ${{ env.dotnet-version }}
     - name: Install dependencies
       run: dotnet restore
+    - name: Build Tasks Project First
+      run: dotnet build src/MTG.Objects.SourceGenerator.Tasks/MTG.Objects.SourceGenerator.Tasks.csproj -c Release
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
-      run: dotnet test --no-restore
+      run: dotnet test -c Release --no-build --no-restore
     - name: Publish
       run: dotnet publish src/MTG.Objects/MTG.Objects.csproj -c Release -o publish/source
     - name: Create nupkg
       run: dotnet pack src/MTG.Objects/MTG.Objects.csproj -c Release -o publish/nuget
     - name: Upload Source
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v5
       with:
         name: source
         path: publish/source/**
         retention-days: 5
         if-no-files-found: error
     - name: Upload NuGet
-      uses: actions/upload-artifact@v2.3.1
+      uses: actions/upload-artifact@v5
       with:
         name: nuget
         path: publish/nuget/**
@@ -72,20 +76,20 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-dotnet@v1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.dotnet-version }}
           source-url: ${{ env.NUGET_URL }}
 
       - name: Download Source
-        uses: actions/download-artifact@v2.1.0
+        uses: actions/download-artifact@v6
         with:
           name: source
           path: ./dist/source
 
       - name: Download NuGet
-        uses: actions/download-artifact@v2.1.0
+        uses: actions/download-artifact@v6
         id: download-nuget
         with:
           name: nuget

@@ -23,4 +23,31 @@ public class CardTests
         resultName.Should().Be(expectedName);
         resultNumber.Should().Match<NumberOfCards>(x => x == expectedNumber);
     }
+
+    [Fact]
+    public void Equality_SameValues_AreEqual()
+    {
+        var card1 = new Card("Lightning Bolt", new NumberOfCards(4));
+        var card2 = new Card("Lightning Bolt", new NumberOfCards(4));
+
+        card1.Should().Be(card2);
+    }
+
+    [Fact]
+    public void Equality_DifferentName_AreNotEqual()
+    {
+        var card1 = new Card("Lightning Bolt", new NumberOfCards(4));
+        var card2 = new Card("Chain Lightning", new NumberOfCards(4));
+
+        card1.Should().NotBe(card2);
+    }
+
+    [Fact]
+    public void Equality_DifferentCount_AreNotEqual()
+    {
+        var card1 = new Card("Lightning Bolt", new NumberOfCards(4));
+        var card2 = new Card("Lightning Bolt", new NumberOfCards(3));
+
+        card1.Should().NotBe(card2);
+    }
 }

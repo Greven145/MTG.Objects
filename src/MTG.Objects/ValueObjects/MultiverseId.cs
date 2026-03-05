@@ -6,7 +6,7 @@ public class MultiverseId : ValueObject {
     private readonly int _id;
 
     public MultiverseId(int id) {
-        _id = Guard.Against.Negative(id, nameof(id));
+        _id = Guard.Against.Negative(id);
     }
 
     public override string ToString() => this;
