@@ -39,7 +39,7 @@ internal static class GeneratorTestHelper
         return driver.RunGenerators(compilation);
     }
 
-    private static Compilation CreateCompilation(string attributeName)
+    private static CSharpCompilation CreateCompilation(string attributeName)
     {
         // Use class-level attribute, not assembly-level, because
         // ForAttributeWithMetadataName only finds attributes on type declarations.

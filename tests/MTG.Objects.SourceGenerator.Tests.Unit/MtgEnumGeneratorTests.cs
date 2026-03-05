@@ -4,6 +4,7 @@ namespace MTG.Objects.SourceGenerator.Tests.Unit;
 
 public class MtgEnumGeneratorTests
 {
+    private static readonly string[] DeduplicationSplitSeparator = ["public static readonly Types AB"];
     private static string MakeEnumJson(string category, string enumName, params string[] values)
     {
         var items = string.Join(", ", values.Select(v => $@"""{v}"""));
@@ -198,7 +199,7 @@ public class MtgEnumGeneratorTests
         var source = GetSource(result, "Card.Types.g.cs");
 
         // Should only appear once
-        var count = source.Split(new[] { "public static readonly Types AB" }, StringSplitOptions.None).Length - 1;
+        var count = source.Split(DeduplicationSplitSeparator, StringSplitOptions.None).Length - 1;
         Assert.Equal(1, count);
     }
 
